@@ -107,13 +107,20 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
 
         Log.v(TAG, "OCRED TEXT: " + recognizedText);
 
-        if ( lang.equalsIgnoreCase("eng") ) {
-            recognizedText = recognizedText.replaceAll("[^a-zA-Z0-9]+", " ");
-        }
 
-        recognizedText = recognizedText.trim();
 
         if ( recognizedText.length() != 0 ) {
+            recognizedText="<!DOCTYPE html>\n" +
+                    "<html lang=\"fr\">\n" +
+                    "<head>\n" +
+                    "\t<meta charset=\"utf-8\">\n" +
+
+                    "\t<link href='http://fonts.googleapis.com/css?family=Marck+Script' rel='stylesheet' type='text/css'>\n" +
+
+                    "\t<title>Dysphographe</title>\n" +
+                    "</head>\n" +
+                    "<body>\n<p>"+recognizedText+"</p></body>";
+
             return recognizedText;
         }
 
@@ -126,10 +133,11 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
     protected void onPostExecute(String o) {
         super.onPostExecute(o);
         progressBar.setVisibility(View.INVISIBLE);
-        wvPhotoToken.loadData(o, "text/html", null);
+        wvPhotoToken.loadData(o, "text/html; charset=UTF-8",null);
 
 
     }
+
 
 
 }
