@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="iutbg.lpiem.aideauxdys.SettingActivity">
+
+    <TextView
+        android:id="@+id/setting_txt_defaut"
+        style="@style/AppTheme.Text.VeryLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/setting_default" />
+
+    <LinearLayout
+        android:id="@+id/setting_layout_space"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/setting_txt_defaut"
+        android:layout_marginBottom="10dp"
+        android:background="#000"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/setting_layout_container1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/setting_layout_space"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            style="@style/AppTheme.Text.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/setting_font" />
+
+        <TextView
+            style="@style/AppTheme.Text.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            tools:text="maFont.ttf" />
+
+        <Button
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_parcourir" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/setting_layout_container2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/setting_layout_container1"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            style="@style/AppTheme.Text.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/setting_color_text" />
+
+        <ImageView
+            android:id="@+id/setting_imgVw_txtColor"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/button_stroke" />
+
+        <TextView
+            style="@style/AppTheme.Text.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/setting_backColor" />
+
+        <ImageView
+            android:id="@+id/setting_imgVw_backColor"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/button_stroke"
+            android:contentDescription="@string/app_name"
+            android:src="#000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/setting_layout_container3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/setting_layout_container2"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            style="@style/AppTheme.Text.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/setting_textSize" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="16"
+            android:layout_marginRight="10dp"
+            android:inputType="number"/>
+
+        <TextView
+            style="@style/AppTheme.Text.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/setting_style" />
+
+        <Button
+            android:id="@+id/setting_bttn_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_bold"/>
+
+        <Button
+            android:id="@+id/setting_bttn_italique"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+        <Button
+            android:id="@+id/setting_bttn_souligner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_souligner"/>
+
+    </LinearLayout>
+</RelativeLayout>
