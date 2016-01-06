@@ -8,6 +8,9 @@ import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
+import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
@@ -16,20 +19,24 @@ import java.io.IOException;
 /**
  * Created by Corentin on 06/01/2016.
  */
-public class PhotoTokenAssync extends AsyncTask {
+public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
     private static final String TAG = "PhotoTokenAssync.java";
     public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/";
     public static final String lang = "fra";
     private Context context;
     private String path;
+    private WebView wvPhotoToken;
+    private ProgressBar progressBar;
 
-    public PhotoTokenAssync(Context context) {
+    public PhotoTokenAssync(Context context,WebView wvPhotoToken,ProgressBar progressBar) {
         this.context = context;
+        this.wvPhotoToken=wvPhotoToken;
+        this.progressBar=progressBar;
         this.path= DATA_PATH + "/ocr.jpg";
     }
 
     @Override
-    protected Object doInBackground(Object[] params) {
+    protected String doInBackground(Integer... params) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
 
@@ -80,6 +87,7 @@ public class PhotoTokenAssync extends AsyncTask {
             Log.e(TAG, "Couldn't correct orientation: " + e.toString());
         }
 
+
         // _image.setImageBitmap( bitmap );
 
         Log.v(TAG, "Before baseApi");
@@ -115,12 +123,13 @@ public class PhotoTokenAssync extends AsyncTask {
     }
 
     @Override
-    protected void onPostExecute(Object o) {
+    protected void onPostExecute(String o) {
         super.onPostExecute(o);
+        progressBar.setVisibility(View.INVISIBLE);
+        wvPhotoToken.loadData(o, "text/html", null);
+
+
     }
 
-    @Override
-    protected void onCancelled() {
-        super.onCancelled();
-    }
+
 }
