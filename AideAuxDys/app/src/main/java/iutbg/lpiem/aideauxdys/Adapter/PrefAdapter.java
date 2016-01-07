@@ -82,6 +82,7 @@ public class PrefAdapter extends BaseAdapter {
                 settingDAO.remove(getItem(position).getId());
                 settingDAO.close();
                 settingList.remove(position);
+                notifyDataSetChanged();
             }
         });
 
