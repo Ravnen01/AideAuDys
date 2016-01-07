@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">AideAuxDys</string>
+    <string name="setting_default">Defaut</string>
+    <string name="setting_font">Font</string>
+    <string name="setting_parcourir">Parcourir</string>
+    <string name="setting_color_text">Couleur du texte</string>
+    <string name="setting_backColor">Couleur de fond</string>
+    <string name="setting_textSize">Taille de la police</string>
+    <string name="setting_style">Style</string>
+    <string name="setting_bold">Gras</string>
+    <string name="setting_souligner">Souligner</string>
+    <string name="setting_italique">Italique</string>
+    <string name="setting_syllabe">Découpage syllabique</string>
+    <string name="setting_schema">Schema</string>
+    <string name="setting_add">Ajouter une preference</string>
+    <string name="setting_custom_pref">Preferences utilisateur</string>
 </resources>

@@ -8,4 +8,29 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Texts Styles -->
+    <style name="AppTheme.Text">
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="AppTheme.Text.VeryLarge">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="AppTheme.Text.Large">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="AppTheme.Text.Medium">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AppTheme.Text.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppTheme.Text.VerySmall">
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>
