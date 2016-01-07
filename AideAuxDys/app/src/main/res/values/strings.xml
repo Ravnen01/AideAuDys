@@ -14,4 +14,5 @@
     <string name="setting_add">Ajouter une preference</string>
     <string name="setting_custom_pref">Preferences utilisateur</string>
     <string name="app_name">Dysphographe</string>
+    <string name="menu_setting">Preference</string>
 </resources>

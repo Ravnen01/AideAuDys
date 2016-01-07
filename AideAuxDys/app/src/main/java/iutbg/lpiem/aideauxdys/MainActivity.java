@@ -2,6 +2,7 @@ package iutbg.lpiem.aideauxdys;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -17,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import iutbg.lpiem.aideauxdys.Model.Setting;
+
 public class MainActivity extends AppCompatActivity {
     public static final String PACKAGE_NAME = "iutbg.lpiem.aideauxdys";
     public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/";
@@ -31,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
+
+        ImageView imgSetting = (ImageView)findViewById(R.id.main_imgVw_setting);
+        imgSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
+            }
+        });
 
         String[] paths = new String[] { DATA_PATH, DATA_PATH + "tessdata/" };
 
