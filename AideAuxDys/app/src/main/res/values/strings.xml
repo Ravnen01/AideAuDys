@@ -1,4 +1,5 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">AideAuxDys</string>
     <string name="setting_default">Defaut</string>
     <string name="setting_font">Font</string>
@@ -14,4 +15,7 @@
     <string name="setting_schema">Schema</string>
     <string name="setting_add">Ajouter une preference</string>
     <string name="setting_custom_pref">Preferences utilisateur</string>
+=======
+    <string name="app_name">Dysphographe</string>
+>>>>>>> 35f009fb234e91f2cf5b3cdbecde04d2ebbb7220
 </resources>
