@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import iutbg.lpiem.aideauxdys.ColorDialog;
 import iutbg.lpiem.aideauxdys.DataBase.SettingDAO;
 import iutbg.lpiem.aideauxdys.Model.Setting;
 import iutbg.lpiem.aideauxdys.R;
@@ -49,7 +50,7 @@ public class PrefAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
 
-        if(convertView==null){
+        if (convertView == null) {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             convertView = inflater.inflate(R.layout.pref_item, parent, false);
 
@@ -64,13 +65,23 @@ public class PrefAdapter extends BaseAdapter {
 
             convertView.setTag(viewHolder);
 
-        }else{
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        Setting setting = getItem(position);
+        viewHolder.edtSchema.setText(setting.getSchema());
+        viewHolder.edtSize.setText(String.valueOf(setting.getSize()));
+        viewHolder.imgTxtColor.setBackgroundColor(setting.getColor());
+        viewHolder.imgTxtColor.setTag(position);
+
+        setButtonStyle(viewHolder.btnBold, setting.isBold());
+        setButtonStyle(viewHolder.btnItalic, setting.isItalic());
+        setButtonStyle(viewHolder.btnUnderline, setting.isUnderline());
+
         initListener(position, viewHolder);
 
-        return  convertView;
+        return convertView;
     }
 
     private void initListener(final int position, ViewHolder viewHolder) {
@@ -82,6 +93,14 @@ public class PrefAdapter extends BaseAdapter {
                 settingDAO.remove(getItem(position).getId());
                 settingDAO.close();
                 settingList.remove(position);
+                notifyDataSetChanged();
+            }
+        });
+
+        viewHolder.imgTxtColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayColorPicker((ImageView)v);
             }
         });
 
@@ -132,18 +151,18 @@ public class PrefAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Setting setting = settingList.get(position);
 
-                switch (v.getId()){
-                    case R.id.item_bttn_bold :
+                switch (v.getId()) {
+                    case R.id.item_bttn_bold:
                         boolean isBold = !setting.isBold();
                         setButtonStyle(v, isBold);
                         setting.setBold(isBold);
                         break;
-                    case R.id.item_bttn_italic :
+                    case R.id.item_bttn_italic:
                         boolean isItalic = !setting.isItalic();
                         setButtonStyle(v, isItalic);
                         setting.setItalic(isItalic);
                         break;
-                    case R.id.item_bttn_underline :
+                    case R.id.item_bttn_underline:
                         boolean isUnderline = !setting.isUnderline();
                         setButtonStyle(v, isUnderline);
                         setting.setUnderline(isUnderline);
@@ -161,14 +180,14 @@ public class PrefAdapter extends BaseAdapter {
     }
 
     private void setButtonStyle(View v, boolean isClicked) {
-        if(isClicked)
+        if (isClicked)
             v.setBackgroundColor(mContext.getResources().getColor(R.color.colorButtonClick));
         else
             v.setBackgroundColor(mContext.getResources().getColor(R.color.colorButton));
     }
 
     public void addSetting() {
-        Setting setting = new Setting(0, "", false, false, false, 16, "", "#000");
+        Setting setting = new Setting(0, "", false, false, false, 16, "", 0xFF000000);
 
         settingDAO.open();
         settingDAO.add(setting);
@@ -178,16 +197,29 @@ public class PrefAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    private class ViewHolder{
+    private class ViewHolder {
         public ImageView imgDelete, imgTxtColor;
         public EditText edtSchema, edtSize;
         public Button btnBold, btnItalic, btnUnderline;
     }
 
-    public void actualiser(){
+    public void actualiser() {
         settingDAO.open();
         settingList = settingDAO.getAll();
         settingDAO.close();
         notifyDataSetChanged();
+    }
+
+    private void displayColorPicker(ImageView imgColor) {
+        ColorDialog dialog = new ColorDialog(mContext, imgColor);
+        dialog.show();
+    }
+
+    public void setColorPickerValue(int color, int position){
+        Setting setting = settingList.get(position);
+        setting.setColor(color);
+        settingDAO.open();
+        settingDAO.update(setting);
+        settingDAO.close();
     }
 }

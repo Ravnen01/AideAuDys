@@ -3,22 +3,22 @@ package iutbg.lpiem.aideauxdys.Model;
 public class Setting {
     private long id;
     private String schema;
-    private boolean gras;
-    private boolean italique;
-    private boolean souligner;
-    private int taille;
-    private String police;
-    private String couleur;
+    private boolean bold;
+    private boolean italic;
+    private boolean underline;
+    private int size;
+    private String font;
+    private int color;
 
-    public Setting(long id, String schema, boolean gras, boolean italique, boolean souligner, int taille, String police, String couleur) {
+    public Setting(long id, String schema, boolean bold, boolean italic, boolean underline, int size, String font, int color) {
         this.id = id;
         this.schema = schema;
-        this.gras = gras;
-        this.italique = italique;
-        this.souligner = souligner;
-        this.taille = taille;
-        this.police = police;
-        this.couleur = couleur;
+        this.bold = bold;
+        this.italic = italic;
+        this.underline = underline;
+        this.size = size;
+        this.font = font;
+        this.color = color;
     }
 
     public long getId() {
@@ -38,50 +38,51 @@ public class Setting {
     }
 
     public boolean isBold() {
-        return gras;
+        return bold;
     }
 
-    public void setBold(boolean gras) {
-        this.gras = gras;
+    public void setBold(boolean bold) {
+        this.bold = bold;
     }
 
     public boolean isItalic() {
-        return italique;
+        return italic;
     }
 
-    public void setItalic(boolean italique) {
-        this.italique = italique;
+    public void setItalic(boolean italic) {
+        this.italic = italic;
     }
 
     public boolean isUnderline() {
-        return souligner;
+        return underline;
     }
 
-    public void setUnderline(boolean souligner) {
-        this.souligner = souligner;
+    public void setUnderline(boolean underline) {
+        this.underline = underline;
     }
 
-    public int getTaille() {
-        return taille;
+    public int getSize() {
+        return size;
     }
 
-    public void setSize(int taille) {
-        this.taille = taille;
+    public void setSize(int size) {
+        this.size = size;
     }
 
-    public String getPolice() {
-        return police;
+    public String getFont() {
+        return font;
     }
 
-    public void setPolice(String police) {
-        this.police = police;
+    public void setFont(String font) {
+        this.font = font;
     }
 
-    public String getCouleur() {
-        return couleur;
+    public int getColor() {
+        return color;
     }
 
-    public void setCouleur(String couleur) {
-        this.couleur = couleur;
+    public Setting setColor(int color) {
+        this.color = color;
+        return null;
     }
 }

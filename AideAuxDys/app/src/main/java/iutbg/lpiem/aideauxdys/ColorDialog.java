@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.github.danielnilsson9.colorpickerview.view.ColorPanelView;
@@ -20,6 +21,7 @@ public class ColorDialog extends Dialog implements View.OnClickListener, ColorPi
     private OnColorPickListener callback;
     private Button mOkButton;
     private Button mCancelButton;
+    private ImageView imgColor;
     private String prefColor;
 
     @Override
@@ -40,12 +42,21 @@ public class ColorDialog extends Dialog implements View.OnClickListener, ColorPi
 
         if(context instanceof OnColorPickListener)
             callback = (OnColorPickListener)context;
+    }
 
+    public ColorDialog(Context context, ImageView imgColor) {
+        super(context);
+        this.imgColor = imgColor;
+
+        if(context instanceof OnColorPickListener)
+            callback = (OnColorPickListener)context;
     }
 
     private void init() {
         preferenceManager = new PreferenceManager(getContext());
-        int initialColor = preferenceManager.getColor(prefColor);
+        int initialColor = 0xFFFFFFFF;
+        if(prefColor != null)
+            initialColor = preferenceManager.getColor(prefColor);
 
         mColorPickerView = (ColorPickerView) findViewById(R.id.colorpickerview__color_picker_view);
         mOldColorPanelView = (ColorPanelView) findViewById(R.id.colorpickerview__color_panel_old);
@@ -77,11 +88,18 @@ public class ColorDialog extends Dialog implements View.OnClickListener, ColorPi
         switch (v.getId()) {
             case R.id.okButton:
                 int color = mColorPickerView.getColor();
-                preferenceManager.saveColor(prefColor, color);
+
+                // Change color of view
+                if(imgColor != null)
+                    imgColor.setBackgroundColor(color);
 
                 // Notify activity
-                if(callback != null)
-                    callback.onColorPickSuccess(prefColor, color);
+                if(callback != null) {
+                    if(prefColor != null)
+                        callback.onColorPickSuccess(prefColor, color);
+                    else if(imgColor.getTag() != null)
+                        callback.onColorPickSuccess((int)imgColor.getTag(), color);
+                }
 
                 break;
             case R.id.cancelButton:
@@ -92,5 +110,6 @@ public class ColorDialog extends Dialog implements View.OnClickListener, ColorPi
 
     public interface OnColorPickListener{
         void onColorPickSuccess(String colorType, int color);
+        void onColorPickSuccess(int position, int color);
     }
 }
