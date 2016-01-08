@@ -29,7 +29,7 @@ public class SettingDAO extends DAOBase{
                     SOULIGNER + " INTEGER, " +
                     TAILLE + " INTEGER, " +
                     POLICE + " TEXT, " +
-                    COULEUR + " TEXT);";
+                    COULEUR + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
@@ -43,9 +43,9 @@ public class SettingDAO extends DAOBase{
         value.put(GRAS, (s.isBold())?1:0);
         value.put(ITALIQUE,(s.isItalic())?1:0);
         value.put(SOULIGNER,(s.isUnderline())?1:0);
-        value.put(TAILLE, s.getTaille());
-        value.put(POLICE, s.getPolice());
-        value.put(COULEUR, s.getCouleur());
+        value.put(TAILLE, s.getSize());
+        value.put(POLICE, s.getFont());
+        value.put(COULEUR, s.getColor());
         mDb.insert(TABLE_NAME, null, value);
     }
 
@@ -55,14 +55,16 @@ public class SettingDAO extends DAOBase{
 
     public void update(Setting s) {
         ContentValues value = new ContentValues();
-        value.put(SCHEMA,s.getSchema());
-        value.put(GRAS, (s.isBold())?1:0);
-        value.put(ITALIQUE,(s.isItalic())?1:0);
-        value.put(SOULIGNER,(s.isUnderline())?1:0);
-        value.put(TAILLE, s.getTaille());
-        value.put(POLICE, s.getPolice());
-        value.put(COULEUR, s.getCouleur());
-        mDb.update(TABLE_NAME, value, KEY + " = ?", new String[]{String.valueOf(s.getId())});
+        if(s != null) {
+            value.put(SCHEMA, s.getSchema());
+            value.put(GRAS, (s.isBold()) ? 1 : 0);
+            value.put(ITALIQUE, (s.isItalic()) ? 1 : 0);
+            value.put(SOULIGNER, (s.isUnderline()) ? 1 : 0);
+            value.put(TAILLE, s.getSize());
+            value.put(POLICE, s.getFont());
+            value.put(COULEUR, s.getColor());
+            mDb.update(TABLE_NAME, value, KEY + " = ?", new String[]{String.valueOf(s.getId())});
+        }
     }
 
     public List<Setting> getAll() {
@@ -76,7 +78,7 @@ public class SettingDAO extends DAOBase{
                     (c.getInt(4) == 1),
                     c.getInt(5),
                     c.getString(6),
-                    c.getString(7)));
+                    c.getInt(7)));
         }
         c.close();
         return settingList;

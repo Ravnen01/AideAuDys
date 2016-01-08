@@ -24,7 +24,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     SETTING_SOULIGNER + " INTEGER, " +
                     SETTING_TAILLE + " INTEGER, " +
                     SETTING_POLICE + " TEXT, " +
-                    SETTING_COULEUR + " TEXT);";
+                    SETTING_COULEUR + " INTEGER);";
 
     public DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

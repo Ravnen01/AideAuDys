@@ -173,10 +173,19 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
 
     @Override
     public void onColorPickSuccess(String colorType, int color) {
-        if (colorType.equals(PreferenceManager.PREFS_BACK_COLOR)) {
-            imgBackColor.setBackgroundColor(color);
-        } else if (colorType.equals(PreferenceManager.PREFS_TEXT_COLOR)) {
-            imgTxtColor.setBackgroundColor(color);
+        if(colorType != null) {
+            if (colorType.equals(PreferenceManager.PREFS_BACK_COLOR)) {
+                imgBackColor.setBackgroundColor(color);
+            } else if (colorType.equals(PreferenceManager.PREFS_TEXT_COLOR)) {
+                imgTxtColor.setBackgroundColor(color);
+            }
+            preferenceManager.saveColor(colorType, color);
         }
+    }
+
+    @Override
+    public void onColorPickSuccess(int position, int color) {
+        // Cas des pickers des preferences custom
+        ((PrefAdapter)lstVwSetting.getAdapter()).setColorPickerValue(color, position);
     }
 }
