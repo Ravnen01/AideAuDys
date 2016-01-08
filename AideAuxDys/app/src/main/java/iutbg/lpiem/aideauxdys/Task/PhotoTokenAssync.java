@@ -27,12 +27,16 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
     private String path;
     private WebView wvPhotoToken;
     private ProgressBar progressBar;
+    private OnFinishListener callback;
 
     public PhotoTokenAssync(Context context,WebView wvPhotoToken,ProgressBar progressBar) {
         this.context = context;
         this.wvPhotoToken=wvPhotoToken;
         this.progressBar=progressBar;
         this.path= DATA_PATH + "/ocr.jpg";
+
+        if(context instanceof OnFinishListener)
+            callback = (OnFinishListener)context;
     }
 
     @Override
@@ -110,6 +114,11 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
 
 
         if ( recognizedText.length() != 0 ) {
+            // Envoi le texte brute au callback
+            if(callback != null)
+                callback.onFinishSuccess(recognizedText);
+
+            // Mise en forme
             recognizedText="<!DOCTYPE html>\n" +
                     "<html lang=\"fr\">\n" +
                     "<head>\n" +
@@ -120,6 +129,7 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
                     "\t<title>Dysphographe</title>\n" +
                     "</head>\n" +
                     "<body>\n<p>"+recognizedText+"</p></body>";
+
 
             return recognizedText;
         }
@@ -134,10 +144,9 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
         super.onPostExecute(o);
         progressBar.setVisibility(View.INVISIBLE);
         wvPhotoToken.loadData(o, "text/html; charset=UTF-8",null);
-
-
     }
 
-
-
+    public interface OnFinishListener{
+        void onFinishSuccess(String data);
+    }
 }

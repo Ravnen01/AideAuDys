@@ -15,4 +15,5 @@
     <string name="setting_custom_pref">Preferences utilisateur</string>
     <string name="app_name">Dysphographe</string>
     <string name="menu_setting">Preference</string>
+    <string name="menu_play">Lecture texte</string>
 </resources>
