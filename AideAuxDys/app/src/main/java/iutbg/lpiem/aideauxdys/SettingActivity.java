@@ -19,6 +19,7 @@ import iutbg.lpiem.aideauxdys.Adapter.PrefAdapter;
 import iutbg.lpiem.aideauxdys.Adapter.SpinnerAdapter;
 import iutbg.lpiem.aideauxdys.DataBase.SettingDAO;
 import iutbg.lpiem.aideauxdys.Manager.FontManager;
+import iutbg.lpiem.aideauxdys.Manager.FormaterManager;
 import iutbg.lpiem.aideauxdys.Manager.PreferenceManager;
 import iutbg.lpiem.aideauxdys.Model.Setting;
 
@@ -32,6 +33,13 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+
+        String text = "test d'un text avec l'expression 'ex' et 'ss' !";
+        FormaterManager formaterManager = new FormaterManager(this);
+        text = formaterManager.formatWithPref(text);
+
+
 
         // Initialisation
         preferenceManager = new PreferenceManager(this);
