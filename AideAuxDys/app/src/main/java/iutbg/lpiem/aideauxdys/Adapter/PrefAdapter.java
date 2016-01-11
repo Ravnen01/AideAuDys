@@ -69,11 +69,12 @@ public class PrefAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Setting setting = getItem(position);
+        Setting setting = settingList.get(position);
         viewHolder.edtSchema.setText(setting.getSchema());
         viewHolder.edtSize.setText(String.valueOf(setting.getSize()));
         viewHolder.imgTxtColor.setBackgroundColor(setting.getColor());
         viewHolder.imgTxtColor.setTag(position);
+        viewHolder.imgDelete.setEnabled(true);
 
         setButtonStyle(viewHolder.btnBold, setting.isBold());
         setButtonStyle(viewHolder.btnItalic, setting.isItalic());
@@ -89,8 +90,9 @@ public class PrefAdapter extends BaseAdapter {
         viewHolder.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.setEnabled(false);
                 settingDAO.open();
-                settingDAO.remove(getItem(position).getId());
+                settingDAO.remove(settingList.get(position).getId());
                 settingDAO.close();
                 settingList.remove(position);
                 notifyDataSetChanged();
@@ -117,12 +119,16 @@ public class PrefAdapter extends BaseAdapter {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Setting setting = settingList.get(position);
-                setting.setSchema(s.toString());
+                if (position < settingList.size()) {
+                    // Si le text est different
+                    if (!getItem(position).getSchema().equals(s.toString())) {
+                        getItem(position).setSchema(s.toString());
 
-                settingDAO.open();
-                settingDAO.update(setting);
-                settingDAO.close();
+                        settingDAO.open();
+                        settingDAO.update(getItem(position));
+                        settingDAO.close();
+                    }
+                }
             }
         });
 
@@ -139,13 +145,19 @@ public class PrefAdapter extends BaseAdapter {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Setting setting = settingList.get(position);
-                if(!s.toString().equals("")){
-                    setting.setSize(Integer.parseInt(s.toString()));
+                if (position < settingList.size()) {
+                    // Si le text est different
+                    String chaine = s.toString();
+                    if (settingList.get(position).getSize() != Integer.parseInt(chaine)) {
+                        Setting setting = settingList.get(position);
+                        if (!chaine.equals("")) {
+                            setting.setSize(Integer.parseInt(chaine));
 
-                    settingDAO.open();
-                    settingDAO.update(setting);
-                    settingDAO.close();
+                            settingDAO.open();
+                            settingDAO.update(setting);
+                            settingDAO.close();
+                        }
+                    }
                 }
             }
         });
@@ -195,10 +207,9 @@ public class PrefAdapter extends BaseAdapter {
 
         settingDAO.open();
         settingDAO.add(setting);
-        settingList.add(setting);
         settingDAO.close();
 
-        notifyDataSetChanged();
+        actualiser();
     }
 
     private class ViewHolder {
@@ -222,6 +233,7 @@ public class PrefAdapter extends BaseAdapter {
     public void setColorPickerValue(int color, int position) {
         Setting setting = settingList.get(position);
         setting.setColor(color);
+        notifyDataSetChanged();
 
         settingDAO.open();
         settingDAO.update(setting);

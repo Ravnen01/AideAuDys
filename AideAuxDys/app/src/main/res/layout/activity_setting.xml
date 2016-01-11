@@ -9,214 +9,225 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="iutbg.lpiem.aideauxdys.SettingActivity">
 
-
-    <TextView
-        android:id="@+id/setting_txt_defaut"
-        style="@style/AppTheme.Text.VeryLarge"
+    <ScrollView
+        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="@string/setting_default" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/setting_layout_space1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/setting_txt_defaut"
-        android:layout_marginBottom="10dp"
-        android:background="#000"
-        android:orientation="horizontal" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/setting_layout_container1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/setting_layout_space1"
-        android:layout_marginBottom="10dp">
 
-        <TextView
-            style="@style/AppTheme.Text.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/setting_font" />
-
-        <Spinner
-            android:id="@+id/setting_spinner_fonts"
-            style="@style/AppTheme.Text.Large"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center"
-            tools:text="maFont.ttf" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_parcourir" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/setting_layout_container2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/setting_layout_container1"
-        android:layout_marginBottom="10dp">
-
-        <TextView
-            style="@style/AppTheme.Text.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/setting_color_text" />
-
-        <LinearLayout
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="#000"
-            android:padding="1dp">
-
-            <ImageView
-                android:id="@+id/setting_imgVw_txtColor"
+            <TextView
+                android:id="@+id/setting_txt_defaut"
+                style="@style/AppTheme.Text.VeryLarge"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/setting_default" />
+
+            <LinearLayout
+                android:id="@+id/setting_layout_space1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/setting_txt_defaut"
+                android:layout_marginBottom="10dp"
                 android:background="#000"
-                android:contentDescription="@string/app_name" />
-        </LinearLayout>
+                android:orientation="horizontal" />
 
-        <TextView
-            style="@style/AppTheme.Text.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/setting_backColor" />
-
-        <LinearLayout
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="#000"
-            android:padding="1dp">
-
-            <ImageView
-                android:id="@+id/setting_imgVw_backColor"
+            <LinearLayout
+                android:id="@+id/setting_layout_container1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#FFF"
-                android:contentDescription="@string/app_name" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/setting_layout_space1"
+                android:layout_marginBottom="10dp">
 
-    </LinearLayout>
+                <TextView
+                    style="@style/AppTheme.Text.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/setting_font" />
 
-    <LinearLayout
-        android:id="@+id/setting_layout_container3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/setting_layout_container2"
-        android:layout_marginBottom="10dp">
+                <Spinner
+                    android:id="@+id/setting_spinner_fonts"
+                    style="@style/AppTheme.Text.Large"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:gravity="center"
+                    tools:text="maFont.ttf" />
 
-        <TextView
-            style="@style/AppTheme.Text.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/setting_textSize" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_parcourir" />
 
-        <EditText
-            android:id="@+id/setting_edtTxt_txtSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:hint="20"
-            android:inputType="number" />
+            </LinearLayout>
 
-        <TextView
-            style="@style/AppTheme.Text.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:text="@string/setting_style" />
+            <LinearLayout
+                android:id="@+id/setting_layout_container2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/setting_layout_container1"
+                android:layout_marginBottom="10dp">
 
-        <Button
-            android:id="@+id/setting_bttn_bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="@string/setting_bold" />
+                <TextView
+                    style="@style/AppTheme.Text.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/setting_color_text" />
 
-        <Button
-            android:id="@+id/setting_bttn_italic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="@string/setting_italique" />
+                <LinearLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="#000"
+                    android:padding="1dp">
 
-        <Button
-            android:id="@+id/setting_bttn_underline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_souligner" />
+                    <ImageView
+                        android:id="@+id/setting_imgVw_txtColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#000"
+                        android:contentDescription="@string/app_name" />
+                </LinearLayout>
 
-    </LinearLayout>
+                <TextView
+                    style="@style/AppTheme.Text.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/setting_backColor" />
 
-    <LinearLayout
-        android:id="@+id/setting_layout_container4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/setting_layout_container3"
-        android:layout_marginBottom="20dp">
+                <LinearLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="#000"
+                    android:padding="1dp">
 
-        <Switch
-            android:id="@+id/setting_switch_syllabe"
-            style="@style/AppTheme.Text.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_syllabe" />
+                    <ImageView
+                        android:id="@+id/setting_imgVw_backColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#FFF"
+                        android:contentDescription="@string/app_name" />
+                </LinearLayout>
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/setting_txt_custom"
-        style="@style/AppTheme.Text.VeryLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/setting_layout_container4"
-        android:layout_marginTop="20dp"
-        android:text="@string/setting_custom_pref" />
+            <LinearLayout
+                android:id="@+id/setting_layout_container3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/setting_layout_container2"
+                android:layout_marginBottom="10dp">
 
-    <LinearLayout
-        android:id="@+id/setting_layout_space2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/setting_txt_custom"
-        android:layout_marginBottom="20dp"
-        android:background="#000"
-        android:orientation="horizontal" />
+                <TextView
+                    style="@style/AppTheme.Text.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/setting_textSize" />
 
-    <ListView
-        android:id="@+id/setting_lstVw_pref"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/setting_bttn_add"
-        android:layout_below="@id/setting_layout_space2" />
+                <EditText
+                    android:id="@+id/setting_edtTxt_txtSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:hint="20"
+                    android:inputType="number" />
 
-    <Button
-        android:id="@+id/setting_bttn_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/setting_add" />
+                <TextView
+                    style="@style/AppTheme.Text.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="@string/setting_style" />
+
+                <Button
+                    android:id="@+id/setting_bttn_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/setting_bold" />
+
+                <Button
+                    android:id="@+id/setting_bttn_italic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/setting_italique" />
+
+                <Button
+                    android:id="@+id/setting_bttn_underline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_souligner" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/setting_layout_container4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/setting_layout_container3"
+                android:layout_marginBottom="20dp">
+
+                <Switch
+                    android:id="@+id/setting_switch_syllabe"
+                    style="@style/AppTheme.Text.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_syllabe" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/setting_txt_custom"
+                style="@style/AppTheme.Text.VeryLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting_layout_container4"
+                android:layout_marginTop="20dp"
+                android:text="@string/setting_custom_pref" />
+
+            <LinearLayout
+                android:id="@+id/setting_layout_space2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/setting_txt_custom"
+                android:layout_marginBottom="20dp"
+                android:background="#000"
+                android:orientation="horizontal" />
+
+            <ListView
+                android:id="@+id/setting_lstVw_pref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/setting_bttn_add"
+                android:layout_below="@id/setting_layout_space2" />
+
+            <Button
+                android:id="@+id/setting_bttn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/setting_add" />
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>
