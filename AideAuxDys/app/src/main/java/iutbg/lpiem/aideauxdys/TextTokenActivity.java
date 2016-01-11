@@ -129,9 +129,10 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
             htmlWorker.parse(new StringReader(recoText));
             document.close();
             file.close();
-            Intent i=new Intent(Intent.ACTION_MEDIA_SHARED);
-            i.setData(Uri.fromFile(new File(Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/"+"test.pdf")));
-            startActivity(i);
+            Intent i=new Intent(Intent.ACTION_SEND);
+            i.setType("application/pdf");
+            i.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(new File(Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/"+"test.pdf")));
+            startActivity(Intent.createChooser(i,"Partager un fichier"));
 
         } catch (Exception e) {
             e.printStackTrace();
