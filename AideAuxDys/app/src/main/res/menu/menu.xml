@@ -11,10 +11,17 @@
         app:showAsAction="always"
         android:title="@string/menu_play" />
 
+    <item android:id="@+id/action_partage"
+        android:icon="@drawable/ic_action_partager"
+        app:showAsAction="always"
+        android:title="@string/menu_parteger" />
+
+
     <item android:id="@+id/action_settings"
         android:icon="@android:drawable/ic_menu_preferences"
         app:showAsAction="always"
         android:title="@string/menu_setting" />
+
 
 
 </menu>
