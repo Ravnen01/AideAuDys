@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/iem/Documents/Projet/AideAuxDys/libraries/tess-two/src/main/assets"/></dataSet><dataSet config="release"><source path="/Users/iem/Documents/Projet/AideAuxDys/libraries/tess-two/src/release/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/Corentin/Documents/AideAuxDys/Prog/AideAuxDys/libraries/tess-two/src/main/assets"/></dataSet><dataSet config="release"><source path="/Users/Corentin/Documents/AideAuxDys/Prog/AideAuxDys/libraries/tess-two/src/release/assets"/></dataSet></merger>

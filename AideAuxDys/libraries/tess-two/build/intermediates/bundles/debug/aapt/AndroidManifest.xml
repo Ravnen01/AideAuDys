@@ -20,11 +20,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-<<<<<<< HEAD
-        android:minSdkVersion="14"
-=======
         android:minSdkVersion="15"
->>>>>>> 35f009fb234e91f2cf5b3cdbecde04d2ebbb7220
         android:targetSdkVersion="23" />
 
 </manifest>
