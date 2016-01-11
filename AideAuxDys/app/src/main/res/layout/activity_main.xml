@@ -11,29 +11,37 @@
     android:background="#b3f0ff">
 
     <ImageView
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/main_imgVw_setting"
-        android:layout_width="wrap_content"
-        android:src="@drawable/ic_action_setting"
-        android:layout_height="wrap_content" />
-
-    <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/ivSplashScreen"
         android:src="@mipmap/ic_launcher_appareil_photo"
-        android:layout_marginTop="47dp"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:id="@+id/ivPhoto"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="124dp"
-        android:src="@mipmap/ic_photo"/>
+        android:src="@drawable/ic_photo_web"
+        android:layout_below="@+id/ivSplashScreen"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:id="@+id/ivGalerieImage"
+        android:layout_below="@+id/ivPhoto"
+        android:layout_alignLeft="@+id/ivPhoto"
+        android:layout_alignStart="@+id/ivPhoto"
+        android:src="@drawable/icone_image"/>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:id="@+id/ivOption"
+        android:layout_below="@+id/ivGalerieImage"
+        android:layout_alignLeft="@+id/ivGalerieImage"
+        android:layout_alignStart="@+id/ivGalerieImage"
+        android:src="@drawable/icone_engrenage"/>
+
 
 </RelativeLayout>
