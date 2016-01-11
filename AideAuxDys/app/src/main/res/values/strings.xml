@@ -16,4 +16,5 @@
     <string name="app_name">Dysphographe</string>
     <string name="menu_setting">Preference</string>
     <string name="menu_play">Lecture texte</string>
+    <string name="menu_parteger">Partager</string>
 </resources>

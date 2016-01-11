@@ -1,14 +1,27 @@
 package iutbg.lpiem.aideauxdys;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+import android.widget.ShareActionProvider;
+
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.html.simpleparser.HTMLWorker;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.StringReader;
 
 import iutbg.lpiem.aideauxdys.Manager.TextReader;
 import iutbg.lpiem.aideauxdys.Task.PhotoTokenAssync;
@@ -19,6 +32,7 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
     private String recoText = "";
     private MenuItem itemPlay;
     private MenuItem itemPause;
+    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +67,9 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
             case R.id.action_pause:
                 pauseReader();
                 return true;
+            case R.id.action_partage:
+                createPDF();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -80,6 +97,8 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
         itemPlay = menu.findItem(R.id.action_play);
         itemPause = menu.findItem(R.id.action_pause);
         itemPause.setVisible(false);
+
+
         return true;
     }
 
@@ -99,4 +118,25 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
         super.onDestroy();
         textReader.destroy();
     }
+
+    private void createPDF(){
+        try{
+            OutputStream file = new FileOutputStream(new File(Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/"+"test.pdf"));
+            Document document = new Document();
+            PdfWriter.getInstance(document, file);
+            document.open();
+            HTMLWorker htmlWorker = new HTMLWorker(document);
+            htmlWorker.parse(new StringReader(recoText));
+            document.close();
+            file.close();
+            Intent i=new Intent(Intent.ACTION_SEND);
+            i.setType("application/pdf");
+            i.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(new File(Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/"+"test.pdf")));
+            startActivity(Intent.createChooser(i,"Partager un fichier"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

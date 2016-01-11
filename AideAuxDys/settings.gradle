@@ -1,2 +1,2 @@
-include ':app', ':itext-pdfa-5.5.8', ':itext-xtra-5.5.8', ':itextpdf-5.5.8', ':xmlworker-5.5.8'
+include ':app'
 include ':libraries:tess-two'
