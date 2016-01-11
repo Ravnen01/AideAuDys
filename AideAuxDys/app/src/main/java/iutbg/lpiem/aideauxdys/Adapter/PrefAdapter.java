@@ -100,7 +100,7 @@ public class PrefAdapter extends BaseAdapter {
         viewHolder.imgTxtColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayColorPicker((ImageView)v);
+                displayColorPicker((ImageView) v);
             }
         });
 
@@ -119,6 +119,7 @@ public class PrefAdapter extends BaseAdapter {
             public void afterTextChanged(Editable s) {
                 Setting setting = settingList.get(position);
                 setting.setSchema(s.toString());
+
                 settingDAO.open();
                 settingDAO.update(setting);
                 settingDAO.close();
@@ -139,10 +140,13 @@ public class PrefAdapter extends BaseAdapter {
             @Override
             public void afterTextChanged(Editable s) {
                 Setting setting = settingList.get(position);
-                setting.setSize(Integer.parseInt(s.toString()));
-                settingDAO.open();
-                settingDAO.update(setting);
-                settingDAO.close();
+                if(!s.toString().equals("")){
+                    setting.setSize(Integer.parseInt(s.toString()));
+
+                    settingDAO.open();
+                    settingDAO.update(setting);
+                    settingDAO.close();
+                }
             }
         });
 
@@ -187,7 +191,7 @@ public class PrefAdapter extends BaseAdapter {
     }
 
     public void addSetting() {
-        Setting setting = new Setting(0, "", false, false, false, 16, "", 0xFF000000);
+        Setting setting = new Setting(0, "", false, false, false, 16, 0xFF000000);
 
         settingDAO.open();
         settingDAO.add(setting);
@@ -215,11 +219,13 @@ public class PrefAdapter extends BaseAdapter {
         dialog.show();
     }
 
-    public void setColorPickerValue(int color, int position){
+    public void setColorPickerValue(int color, int position) {
         Setting setting = settingList.get(position);
         setting.setColor(color);
+
         settingDAO.open();
         settingDAO.update(setting);
         settingDAO.close();
+
     }
 }
