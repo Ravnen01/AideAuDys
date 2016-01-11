@@ -206,16 +206,12 @@ public class PrefAdapter extends BaseAdapter {
         Setting setting = new Setting(0, "", false, false, false, 16, 0xFF000000);
 
         settingDAO.open();
-        settingDAO.add(setting);
+        long id = settingDAO.add(setting);
+        setting.setId(id);
         settingDAO.close();
 
-        actualiser();
-    }
-
-    private class ViewHolder {
-        public ImageView imgDelete, imgTxtColor;
-        public EditText edtSchema, edtSize;
-        public Button btnBold, btnItalic, btnUnderline;
+        settingList.add(setting);
+        notifyDataSetChanged();
     }
 
     public void actualiser() {
@@ -239,5 +235,11 @@ public class PrefAdapter extends BaseAdapter {
         settingDAO.update(setting);
         settingDAO.close();
 
+    }
+
+    private class ViewHolder {
+        public ImageView imgDelete, imgTxtColor;
+        public EditText edtSchema, edtSize;
+        public Button btnBold, btnItalic, btnUnderline;
     }
 }

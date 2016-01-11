@@ -35,7 +35,12 @@ public class SettingDAO extends DAOBase{
         super(pContext);
     }
 
-    public void add(Setting s) {
+    /**
+     *
+     * @param s new setting
+     * @return Id of new setting
+     */
+    public long add(Setting s) {
         ContentValues value = new ContentValues();
         value.put(SCHEMA,s.getSchema());
         value.put(GRAS, (s.isBold())?1:0);
@@ -43,7 +48,7 @@ public class SettingDAO extends DAOBase{
         value.put(SOULIGNER,(s.isUnderline())?1:0);
         value.put(TAILLE, s.getSize());
         value.put(COULEUR, s.getColor());
-        mDb.insert(TABLE_NAME, null, value);
+        return mDb.insert(TABLE_NAME, null, value);
     }
 
     public void remove(long id) {
