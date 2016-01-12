@@ -114,12 +114,7 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
         Log.v(TAG, "OCRED TEXT: " + recognizedText);
 
         if ( recognizedText.length() != 0 ) {
-            // Envoi le texte brute au callback
-            if(callback != null)
-                callback.onFinishSuccess(recognizedText);
-
-            FormaterManager formaterManager = new FormaterManager(context);
-            return formaterManager.formatWithPref(recognizedText);
+            return recognizedText;
         }
 
         // Cycle done.
@@ -131,7 +126,10 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
     protected void onPostExecute(String o) {
         super.onPostExecute(o);
         progressBar.setVisibility(View.INVISIBLE);
-        wvPhotoToken.loadDataWithBaseURL("file:///android_asset/Fonts/",o, "text/html","utf-8",null);
+
+        // Envoi le texte brute au callback
+        if (callback != null)
+            callback.onFinishSuccess(o);
     }
 
     public interface OnFinishListener{
