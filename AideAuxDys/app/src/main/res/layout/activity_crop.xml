@@ -12,5 +12,38 @@
     <com.edmodo.cropper.CropImageView
         android:id="@+id/CropImageView_crop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="200dp"
+        android:layout_above="@+id/ibRotateLeft"
+        android:layout_alignParentTop="true" />
+
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ibRotateLeft"
+            android:src="@drawable/ic_action_rotate_image_left"
+            android:layout_alignTop="@+id/ibValidImage"
+            android:layout_toRightOf="@+id/ibValidImage"
+            android:layout_toEndOf="@+id/ibValidImage" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ibRotateRight"
+            android:src="@drawable/ic_action_rotate_image_right"
+            android:layout_alignTop="@+id/ibRotateLeft"
+            android:layout_toRightOf="@+id/ibRotateLeft"
+            android:layout_toEndOf="@+id/ibRotateLeft" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ibValidImage"
+            android:src="@drawable/ic_action_valid_image"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+
 </RelativeLayout>
