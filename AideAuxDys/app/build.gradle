@@ -26,10 +26,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.github.danielnilsson9:color-picker-view:1.4.0@aar'
     compile project(path: ':libraries:tess-two')
-    compile files('/Users/iem/Documents/Projet/AideAuxDys/libraries/itext-5.5.8/itext-pdfa-5.5.8.jar')
 
-    compile files('/Users/iem/Documents/Projet/AideAuxDys/libraries/itext-5.5.8/itextpdf-5.5.8.jar')
-
-    compile files('/Users/iem/Documents/Projet/AideAuxDys/libraries/itext-5.5.8/xmlworker-5.5.8.jar')
 
 }
