@@ -210,7 +210,7 @@ public class PrefAdapter extends BaseAdapter {
         setting.setId(id);
         settingDAO.close();
 
-        settingList.add(setting);
+        settingList.add(settingList.size(),setting);
         notifyDataSetChanged();
     }
 

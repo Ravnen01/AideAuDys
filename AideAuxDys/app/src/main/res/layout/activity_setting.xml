@@ -10,9 +10,9 @@
     tools:context="iutbg.lpiem.aideauxdys.SettingActivity">
 
     <ScrollView
-        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -218,7 +218,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/setting_bttn_add"
-                android:layout_below="@id/setting_layout_space2" />
+                android:layout_below="@id/setting_layout_space2"
+                android:descendantFocusability="afterDescendants" />
 
             <Button
                 android:id="@+id/setting_bttn_add"
