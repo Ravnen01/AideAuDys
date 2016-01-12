@@ -131,12 +131,12 @@ public class FormaterManager {
             css += "}\n\n";
         }
 
-        css += "</style></header><body><span class=\"prefGlobal\">";
+        css += "</style></header><body class=\"prefGlobal\">";
 
         if (!html.isEmpty()) {
             css += html;
         }
-        css += "</span></body></html>";
+        css += "</body></html>";
 
         return css;
     }

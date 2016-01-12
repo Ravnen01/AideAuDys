@@ -210,6 +210,7 @@
                 android:layout_height="1dp"
                 android:layout_below="@id/setting_txt_custom"
                 android:layout_marginBottom="20dp"
+                android:focusableInTouchMode="true"
                 android:background="#000"
                 android:orientation="horizontal" />
 

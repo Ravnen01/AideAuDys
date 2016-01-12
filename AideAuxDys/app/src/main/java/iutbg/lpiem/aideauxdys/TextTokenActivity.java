@@ -5,14 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
-import android.widget.ShareActionProvider;
-
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
@@ -23,7 +20,6 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 
-import iutbg.lpiem.aideauxdys.Manager.FormaterManager;
 import iutbg.lpiem.aideauxdys.Manager.TextReader;
 import iutbg.lpiem.aideauxdys.Task.PhotoTokenAssync;
 
