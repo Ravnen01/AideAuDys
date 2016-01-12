@@ -8,6 +8,8 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.edmodo.cropper.CropImageView;
 
@@ -20,6 +22,7 @@ public class CropActivity extends AppCompatActivity {
     private static final String TAG = "PhotoTokenAssync.java";
     public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/";
     private String path;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,7 @@ public class CropActivity extends AppCompatActivity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
 
-        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+        bitmap = BitmapFactory.decodeFile(path, options);
 
         try {
             ExifInterface exif = new ExifInterface(path);
@@ -79,5 +82,46 @@ public class CropActivity extends AppCompatActivity {
 
         cropPhoto = (CropImageView)findViewById(R.id.CropImageView_crop);
         cropPhoto.setImageBitmap(bitmap);
+
+        ImageButton ibRotateLeft=(ImageButton)findViewById(R.id.ibRotateLeft);
+        ImageButton ibRotateRight=(ImageButton)findViewById(R.id.ibRotateRight);
+        ImageButton ibValide=(ImageButton)findViewById(R.id.ibValidImage);
+
+        ibRotateLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Matrix matrix = new Matrix();
+
+                matrix.postRotate(-90);
+
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
+
+                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap .getWidth(), scaledBitmap .getHeight(), matrix, true);
+                bitmap=rotatedBitmap;
+                cropPhoto.setImageBitmap(bitmap);
+            }
+        });
+
+        ibRotateRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Matrix matrix = new Matrix();
+
+                matrix.postRotate(90);
+
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
+
+                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap .getWidth(), scaledBitmap .getHeight(), matrix, true);
+                bitmap=rotatedBitmap;
+                cropPhoto.setImageBitmap(bitmap);
+            }
+        });
+
+        ibValide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }
