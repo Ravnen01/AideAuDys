@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
-        ImageView imgSetting = (ImageView)findViewById(R.id.main_imgVw_setting);
+        ImageView imgSetting = (ImageView)findViewById(R.id.ivOption);
         imgSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
