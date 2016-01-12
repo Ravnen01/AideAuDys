@@ -23,7 +23,7 @@
         android:layout_height="100dp"
         android:id="@+id/ivSplashScreen"
         android:src="@mipmap/ic_launcher_appareil_photo"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/main_imgVw_setting"
         android:layout_centerHorizontal="true" />
 
     <ImageView
@@ -32,26 +32,31 @@
         android:id="@+id/ivPhoto"
         android:src="@drawable/ic_photo_web"
         android:layout_below="@+id/ivSplashScreen"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_toLeftOf="@+id/ivSplashScreen"
+        android:layout_toStartOf="@+id/ivSplashScreen"
+        android:layout_marginRight="140dp"
+        android:layout_marginEnd="140dp" />
 
     <ImageView
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:id="@+id/ivGalerieImage"
         android:src="@drawable/icone_image"
-        android:layout_alignBottom="@+id/ivPhoto"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/ivSplashScreen"
+        android:layout_toLeftOf="@+id/main_imgVw_setting"
+        android:layout_toStartOf="@+id/main_imgVw_setting"
+        android:layout_marginRight="126dp"
+        android:layout_marginEnd="126dp" />
 
     <ImageView
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:id="@+id/ivOption"
+        android:src="@drawable/icone_engrenage"
         android:layout_below="@+id/ivGalerieImage"
         android:layout_alignLeft="@+id/ivGalerieImage"
         android:layout_alignStart="@+id/ivGalerieImage"
-        android:src="@drawable/icone_engrenage"/>
+        android:layout_marginTop="123dp" />
 
 
 </RelativeLayout>
