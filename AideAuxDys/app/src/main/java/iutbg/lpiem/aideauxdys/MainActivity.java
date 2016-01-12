@@ -2,7 +2,8 @@ package iutbg.lpiem.aideauxdys;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.media.Image;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -13,12 +14,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import iutbg.lpiem.aideauxdys.Model.Setting;
+
 
 public class MainActivity extends AppCompatActivity {
     public static final String PACKAGE_NAME = "iutbg.lpiem.aideauxdys";
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     protected static final String PHOTO_TAKEN = "photo_taken";
     protected String path;
     protected boolean taken;
+    private static final int SELECT_PHOTO=12;
+    private static final int CAPTURE_PHOTO=11;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        ImageView imgImportImage=(ImageView)findViewById(R.id.ivGalerieImage);
+        imgImportImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
             }
         });
 
@@ -103,19 +117,56 @@ public class MainActivity extends AppCompatActivity {
         final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
 
-        startActivityForResult(intent, 0);
+        startActivityForResult(intent, CAPTURE_PHOTO);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode,resultCode,data);
         Log.i(TAG, "resultCode: " + resultCode);
+        switch(requestCode) {
+            case SELECT_PHOTO:
+                if(resultCode==RESULT_OK){
+                    final Uri imageUri = data.getData();
+                    final InputStream imageStream;
+                    FileOutputStream out = null;
+                    try {
+                        imageStream = getContentResolver().openInputStream(imageUri);
+                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-        if (resultCode == -1) {
-            starActivityPhotoTaken();
-        } else {
-            Log.v(TAG, "User cancelled");
+
+                        File file=new File(path);
+                        out = new FileOutputStream(file);
+                        selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+
+                        starActivityResizePhoto();
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }finally {
+                        try {
+                            if (out != null) {
+                                out.close();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }else{
+                    Log.v(TAG,"User cancelled");
+                }
+                break;
+            case CAPTURE_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    starActivityResizePhoto();
+                } else {
+                    Log.v(TAG, "User cancelled");
+                }
+                break;
         }
+
+
     }
 
     @Override
@@ -127,12 +178,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         Log.i(TAG, "onRestoreInstanceState()");
         if (savedInstanceState.getBoolean(MainActivity.PHOTO_TAKEN)) {
-            starActivityPhotoTaken();
+            starActivityResizePhoto();
         }
     }
 
-    protected void starActivityPhotoTaken(){
-        Intent intent=new Intent(this,TextTokenActivity.class);
+    protected void starActivityResizePhoto(){
+        Intent intent=new Intent(this,CropActivity.class);
         startActivity(intent);
     }
 }
