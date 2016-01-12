@@ -11,7 +11,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String SETTING_ITALIQUE = "italique";
     public static final String SETTING_SOULIGNER = "souligner";
     public static final String SETTING_TAILLE = "taille";
-    public static final String SETTING_POLICE = "police";
     public static final String SETTING_COULEUR = "couleur";
 
     public static final String SETTING_TABLE_NAME = "Setting";
@@ -23,7 +22,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     SETTING_ITALIQUE + " INTEGER, " +
                     SETTING_SOULIGNER + " INTEGER, " +
                     SETTING_TAILLE + " INTEGER, " +
-                    SETTING_POLICE + " TEXT, " +
                     SETTING_COULEUR + " INTEGER);";
 
     public DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {

@@ -16,6 +16,8 @@ import com.googlecode.tesseract.android.TessBaseAPI;
 
 import java.io.IOException;
 
+import iutbg.lpiem.aideauxdys.Manager.FormaterManager;
+
 /**
  * Created by Corentin on 06/01/2016.
  */
@@ -119,7 +121,7 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
                 callback.onFinishSuccess(recognizedText);
 
             // Mise en forme
-            recognizedText="<!DOCTYPE html>\n" +
+            /*recognizedText="<!DOCTYPE html>\n" +
                     "<html lang=\"fr\">\n" +
                     "<head>\n" +
                     "\t<meta charset=\"utf-8\">\n" +
@@ -128,10 +130,10 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
 
                     "\t<title>Dysphographe</title>\n" +
                     "</head>\n" +
-                    "<body>\n<p>"+recognizedText+"</p></body>";
+                    "<body>\n<p>"+recognizedText+"</p></body>";*/
 
-
-            return recognizedText;
+            FormaterManager formaterManager = new FormaterManager(context);
+            return formaterManager.formatWithPref(recognizedText);
         }
 
         // Cycle done.

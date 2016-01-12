@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 
+import iutbg.lpiem.aideauxdys.Manager.FormaterManager;
 import iutbg.lpiem.aideauxdys.Manager.TextReader;
 import iutbg.lpiem.aideauxdys.Task.PhotoTokenAssync;
 
@@ -32,7 +33,7 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
     private String recoText = "";
     private MenuItem itemPlay;
     private MenuItem itemPause;
-    private ShareActionProvider mShareActionProvider;
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
         actionBar.setHomeButtonEnabled(true);
 
         textReader = new TextReader(this);
-        final WebView webView = (WebView) findViewById(R.id.wvTextToken);
+        webView = (WebView) findViewById(R.id.wvTextToken);
         ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
 
         progressBar.setMax(10);
@@ -105,6 +106,7 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
     @Override
     public void onFinishSuccess(String data) {
         recoText = data;
+        //webView.loadData(formaterManager.formatWithPref(data), "text/html; charset=UTF-8",null);
     }
 
     @Override

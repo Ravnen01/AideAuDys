@@ -50,7 +50,7 @@ public class PreferenceManager {
     /**
      * @return textSize
      */
-    public int getTextSize(){
+    public int getSize(){
         return preferences.getInt(PREFS_TEXT_SIZE, 20);
     }
 
@@ -66,7 +66,7 @@ public class PreferenceManager {
     /**
      * @return isBold
      */
-    public boolean getIsBold(){
+    public boolean isBold(){
         return preferences.getBoolean(PREFS_GRAS, false);
     }
 
@@ -82,7 +82,7 @@ public class PreferenceManager {
     /**
      * @return isItalic
      */
-    public boolean getIsItalic(){
+    public boolean isItalic(){
         return preferences.getBoolean(PREFS_ITALIC, false);
     }
 
@@ -98,7 +98,7 @@ public class PreferenceManager {
     /**
      * @return isUnderLine
      */
-    public boolean getIsUnderLine(){
+    public boolean isUnderLine(){
         return preferences.getBoolean(PREFS_UNDERLINE, false);
     }
 

@@ -20,13 +20,13 @@ import iutbg.lpiem.aideauxdys.Adapter.SpinnerAdapter;
 import iutbg.lpiem.aideauxdys.DataBase.SettingDAO;
 import iutbg.lpiem.aideauxdys.Manager.FontManager;
 import iutbg.lpiem.aideauxdys.Manager.PreferenceManager;
-import iutbg.lpiem.aideauxdys.Model.Setting;
 
 public class SettingActivity extends AppCompatActivity implements ColorDialog.OnColorPickListener {
     private PreferenceManager preferenceManager;
     private ListView lstVwSetting;
     private ImageView imgTxtColor;
     private ImageView imgBackColor;
+    private SettingDAO settingDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
         // Initialisation
         preferenceManager = new PreferenceManager(this);
         FontManager fontManager = new FontManager(this);
+        settingDAO = new SettingDAO(this);
         lstVwSetting = (ListView) findViewById(R.id.setting_lstVw_pref);
         imgTxtColor = (ImageView) findViewById(R.id.setting_imgVw_txtColor);
         imgBackColor = (ImageView) findViewById(R.id.setting_imgVw_backColor);
@@ -62,11 +63,11 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
         spinnerFonts.setAdapter(spinnerArrayAdapter);
         spinnerFonts.setPrompt(preferenceManager.getFontName());
 
-        setButtonStyle(btnBold, preferenceManager.getIsBold());
-        setButtonStyle(btnItalic, preferenceManager.getIsItalic());
-        setButtonStyle(btnUnderLine, preferenceManager.getIsUnderLine());
+        setButtonStyle(btnBold, preferenceManager.isBold());
+        setButtonStyle(btnItalic, preferenceManager.isItalic());
+        setButtonStyle(btnUnderLine, preferenceManager.isUnderLine());
 
-        edtTxtSize.setText(String.valueOf(preferenceManager.getTextSize()));
+        edtTxtSize.setText(String.valueOf(preferenceManager.getSize()));
         switchSyllabe.setChecked(preferenceManager.getIsCutSyllabe());
         lstVwSetting.setAdapter(new PrefAdapter(this));
 
@@ -137,17 +138,17 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.setting_bttn_bold:
-                        boolean isBold = !preferenceManager.getIsBold();
+                        boolean isBold = !preferenceManager.isBold();
                         preferenceManager.saveisBold(isBold);
                         setButtonStyle(v, isBold);
                         break;
                     case R.id.setting_bttn_italic:
-                        boolean isItalic = !preferenceManager.getIsItalic();
+                        boolean isItalic = !preferenceManager.isItalic();
                         preferenceManager.saveIsItalic(isItalic);
                         setButtonStyle(v, isItalic);
                         break;
                     case R.id.setting_bttn_underline:
-                        boolean isUnderLine = !preferenceManager.getIsUnderLine();
+                        boolean isUnderLine = !preferenceManager.isUnderLine();
                         preferenceManager.saveIsUnderLine(isUnderLine);
                         setButtonStyle(v, isUnderLine);
                         break;

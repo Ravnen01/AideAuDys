@@ -7,17 +7,15 @@ public class Setting {
     private boolean italic;
     private boolean underline;
     private int size;
-    private String font;
     private int color;
 
-    public Setting(long id, String schema, boolean bold, boolean italic, boolean underline, int size, String font, int color) {
+    public Setting(long id, String schema, boolean bold, boolean italic, boolean underline, int size, int color) {
         this.id = id;
         this.schema = schema;
         this.bold = bold;
         this.italic = italic;
         this.underline = underline;
         this.size = size;
-        this.font = font;
         this.color = color;
     }
 
@@ -67,14 +65,6 @@ public class Setting {
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    public String getFont() {
-        return font;
-    }
-
-    public void setFont(String font) {
-        this.font = font;
     }
 
     public int getColor() {

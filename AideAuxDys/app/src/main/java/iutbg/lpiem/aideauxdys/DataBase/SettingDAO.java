@@ -17,7 +17,6 @@ public class SettingDAO extends DAOBase{
     public static final String ITALIQUE = "italique";
     public static final String SOULIGNER = "souligner";
     public static final String TAILLE = "taille";
-    public static final String POLICE = "police";
     public static final String COULEUR = "couleur";
 
     public static final String SETTING_TABLE_CREATE =
@@ -28,7 +27,6 @@ public class SettingDAO extends DAOBase{
                     ITALIQUE + " INTEGER, " +
                     SOULIGNER + " INTEGER, " +
                     TAILLE + " INTEGER, " +
-                    POLICE + " TEXT, " +
                     COULEUR + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
@@ -37,16 +35,20 @@ public class SettingDAO extends DAOBase{
         super(pContext);
     }
 
-    public void add(Setting s) {
+    /**
+     *
+     * @param s new setting
+     * @return Id of new setting
+     */
+    public long add(Setting s) {
         ContentValues value = new ContentValues();
         value.put(SCHEMA,s.getSchema());
         value.put(GRAS, (s.isBold())?1:0);
         value.put(ITALIQUE,(s.isItalic())?1:0);
         value.put(SOULIGNER,(s.isUnderline())?1:0);
         value.put(TAILLE, s.getSize());
-        value.put(POLICE, s.getFont());
         value.put(COULEUR, s.getColor());
-        mDb.insert(TABLE_NAME, null, value);
+        return mDb.insert(TABLE_NAME, null, value);
     }
 
     public void remove(long id) {
@@ -61,7 +63,6 @@ public class SettingDAO extends DAOBase{
             value.put(ITALIQUE, (s.isItalic()) ? 1 : 0);
             value.put(SOULIGNER, (s.isUnderline()) ? 1 : 0);
             value.put(TAILLE, s.getSize());
-            value.put(POLICE, s.getFont());
             value.put(COULEUR, s.getColor());
             mDb.update(TABLE_NAME, value, KEY + " = ?", new String[]{String.valueOf(s.getId())});
         }
@@ -77,8 +78,7 @@ public class SettingDAO extends DAOBase{
                     (c.getInt(3) == 1),
                     (c.getInt(4) == 1),
                     c.getInt(5),
-                    c.getString(6),
-                    c.getInt(7)));
+                    c.getInt(6)));
         }
         c.close();
         return settingList;
