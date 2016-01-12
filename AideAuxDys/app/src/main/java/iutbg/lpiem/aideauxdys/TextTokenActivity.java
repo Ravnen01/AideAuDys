@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 
+import iutbg.lpiem.aideauxdys.Manager.FormaterManager;
 import iutbg.lpiem.aideauxdys.Manager.TextReader;
 import iutbg.lpiem.aideauxdys.Task.PhotoTokenAssync;
 
@@ -124,7 +125,8 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
             PdfWriter.getInstance(document, file);
             document.open();
             HTMLWorker htmlWorker = new HTMLWorker(document);
-            htmlWorker.parse(new StringReader(recoText));
+            FormaterManager formaterManager=new FormaterManager(getApplicationContext());
+            htmlWorker.parse(new StringReader(formaterManager.formatWithPref(recoText)));
             document.close();
             file.close();
             Intent i=new Intent(Intent.ACTION_SEND);
