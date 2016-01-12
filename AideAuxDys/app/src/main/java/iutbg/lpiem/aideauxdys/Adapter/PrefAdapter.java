@@ -203,7 +203,7 @@ public class PrefAdapter extends BaseAdapter {
     }
 
     public void addSetting() {
-        Setting setting = new Setting(0, "", false, false, false, 16, 0xFF000000);
+        Setting setting = new Setting(0, "", false, false, false, 16, 0xFF000000, true);
 
         settingDAO.open();
         long id = settingDAO.add(setting);

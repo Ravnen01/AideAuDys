@@ -219,8 +219,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/setting_bttn_add"
-                android:layout_below="@id/setting_layout_space2"
-                android:descendantFocusability="afterDescendants" />
+                android:layout_below="@id/setting_layout_space2" />
 
             <Button
                 android:id="@+id/setting_bttn_add"

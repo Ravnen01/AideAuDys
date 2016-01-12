@@ -8,8 +8,9 @@ public class Setting {
     private boolean underline;
     private int size;
     private int color;
+    private boolean isEnabled;
 
-    public Setting(long id, String schema, boolean bold, boolean italic, boolean underline, int size, int color) {
+    public Setting(long id, String schema, boolean bold, boolean italic, boolean underline, int size, int color, boolean isEnabled) {
         this.id = id;
         this.schema = schema;
         this.bold = bold;
@@ -17,6 +18,15 @@ public class Setting {
         this.underline = underline;
         this.size = size;
         this.color = color;
+        this.isEnabled = isEnabled;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
 
     public long getId() {

@@ -113,24 +113,10 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
 
         Log.v(TAG, "OCRED TEXT: " + recognizedText);
 
-
-
         if ( recognizedText.length() != 0 ) {
             // Envoi le texte brute au callback
             if(callback != null)
                 callback.onFinishSuccess(recognizedText);
-
-            // Mise en forme
-            /*recognizedText="<!DOCTYPE html>\n" +
-                    "<html lang=\"fr\">\n" +
-                    "<head>\n" +
-                    "\t<meta charset=\"utf-8\">\n" +
-
-                    "\t<link href='http://fonts.googleapis.com/css?family=Marck+Script' rel='stylesheet' type='text/css'>\n" +
-
-                    "\t<title>Dysphographe</title>\n" +
-                    "</head>\n" +
-                    "<body>\n<p>"+recognizedText+"</p></body>";*/
 
             FormaterManager formaterManager = new FormaterManager(context);
             return formaterManager.formatWithPref(recognizedText);

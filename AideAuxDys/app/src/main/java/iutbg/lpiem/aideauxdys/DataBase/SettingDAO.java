@@ -18,6 +18,7 @@ public class SettingDAO extends DAOBase{
     public static final String SOULIGNER = "souligner";
     public static final String TAILLE = "taille";
     public static final String COULEUR = "couleur";
+    public static final String ENABLED = "enable";
 
     public static final String SETTING_TABLE_CREATE =
             "CREATE TABLE " + TABLE_NAME + " (" +
@@ -27,7 +28,8 @@ public class SettingDAO extends DAOBase{
                     ITALIQUE + " INTEGER, " +
                     SOULIGNER + " INTEGER, " +
                     TAILLE + " INTEGER, " +
-                    COULEUR + " INTEGER);";
+                    COULEUR + " INTEGER" +
+                    ENABLED + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
@@ -48,6 +50,7 @@ public class SettingDAO extends DAOBase{
         value.put(SOULIGNER,(s.isUnderline())?1:0);
         value.put(TAILLE, s.getSize());
         value.put(COULEUR, s.getColor());
+        value.put(ENABLED, s.isEnabled());
         return mDb.insert(TABLE_NAME, null, value);
     }
 
@@ -64,6 +67,7 @@ public class SettingDAO extends DAOBase{
             value.put(SOULIGNER, (s.isUnderline()) ? 1 : 0);
             value.put(TAILLE, s.getSize());
             value.put(COULEUR, s.getColor());
+            value.put(ENABLED, s.isEnabled());
             mDb.update(TABLE_NAME, value, KEY + " = ?", new String[]{String.valueOf(s.getId())});
         }
     }
@@ -78,7 +82,8 @@ public class SettingDAO extends DAOBase{
                     (c.getInt(3) == 1),
                     (c.getInt(4) == 1),
                     c.getInt(5),
-                    c.getInt(6)));
+                    c.getInt(6),
+                    (c.getInt(7) == 1)));
         }
         c.close();
         return settingList;
