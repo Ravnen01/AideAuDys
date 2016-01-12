@@ -35,9 +35,10 @@ public class FormaterManager {
                 // Pour chaque partie de mon texte (découper en fonction des schemas)
                 int size = splitList.size();
                 for (int i = size - 1; i >= 0; i--) {
-                    if (!splitList.get(i).matches("<(.*)span(.*)>")) {
+                    String part = splitList.get(i);
+                    if (part != null && !part.matches("<(.*)span(.*)>")) {
                         // On le coupe en fonction du schema
-                        List<String> newSplitList = split(splitList.get(i), schema);
+                        List<String> newSplitList = split(part, schema);
                         // Si un schema est trouvé
                         if (newSplitList.size() > 1) {
                             // et on ajoute les balises de style entre les schemas trouvé
@@ -91,7 +92,12 @@ public class FormaterManager {
     }
 
     private String generateCSSfromPref(String html, List<Setting> settingList) {
-        String css = "<html><header><style>";
+        String css = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \n" +
+                "   \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
+                "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                "    <head>\n"  +
+                "        <style type=\"text/css\">\n";
 
         // Global pref
         String font = preferenceManager.getFontName();
@@ -136,12 +142,13 @@ public class FormaterManager {
             css += "}\n\n";
         }
 
-        css += "</style></header><body class=\"prefGlobal\">";
+        css += "</style>\n</head>\n<body class=\"prefGlobal\">\n";
 
         if (!html.isEmpty()) {
             css += html;
         }
-        css += "</body></html>";
+        css += "    </body>\n" +
+                "</html>";
 
         return css;
     }

@@ -59,10 +59,10 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
         Log.v(TAG, "OCRED TEXT: " + recognizedText);
 
         if ( recognizedText.length() != 0 ) {
+
             // Envoi le texte brute au callback
             if(callback != null)
                 callback.onFinishSuccess(recognizedText);
-
 
             return recognizedText;
         }
@@ -77,10 +77,14 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
         super.onPostExecute(o);
         progressBar.setVisibility(View.INVISIBLE);
 
+
         Intent i=new Intent(activity, TextTokenActivity.class);
         Bundle b=new Bundle();
         b.putString("recoString",o);
         i.putExtras(b);
+        // Envoi le texte brute au callback
+        if (callback != null)
+            callback.onFinishSuccess(o);
         activity.startActivity(i);
         activity.finish();
 
