@@ -84,7 +84,7 @@ public class FormaterManager {
             if (splitList.get(i).contains(setting.getSchema())) {
                 splitList.add(i + 1, "</span>");
                 splitList.add(i, "<span class=\"pref" + setting.getId() + "\">");
-                i++;
+                i+=2;
             }
         }
     }

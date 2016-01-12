@@ -35,7 +35,13 @@ public class PreferenceManager {
      * @param colorType Choisir entre PreferenceManager.PREFS_TEXT_COLOR et PreferenceManager.PREFS_BACK_COLOR
      */
     public int getColor(String colorType){
-        return preferences.getInt(colorType, 0xFF000000);
+        int defaultColor;
+        if(colorType.equals(PREFS_BACK_COLOR))
+            defaultColor = 0xFFFFFFFF;
+        else
+            defaultColor = 0xFF000000;
+
+        return preferences.getInt(colorType, defaultColor);
     }
 
     /**
