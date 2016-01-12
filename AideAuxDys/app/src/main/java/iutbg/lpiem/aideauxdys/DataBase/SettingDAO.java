@@ -73,7 +73,7 @@ public class SettingDAO extends DAOBase{
     }
 
     public List<Setting> getAll() {
-        Cursor c = mDb.rawQuery("select * from " + TABLE_NAME, null);
+        Cursor c = mDb.rawQuery("select * from " + TABLE_NAME+ " WHERE "+ENABLED +" = 1", null);
         List<Setting> settingList = new ArrayList<>();
         while (c.moveToNext()){
             settingList.add(new Setting(c.getLong(0),

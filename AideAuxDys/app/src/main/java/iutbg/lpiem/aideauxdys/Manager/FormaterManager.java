@@ -2,6 +2,7 @@ package iutbg.lpiem.aideauxdys.Manager;
 
 import android.content.Context;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -93,11 +94,15 @@ public class FormaterManager {
         String css = "<html><header><style>";
 
         // Global pref
-        String fontName = preferenceManager.getFontName();
-        css += "@font-face {\n" +
-                "    font-family: '" + fontName + "';\n" +
-                "    src: url('/" + fontName + "');\n" +
-                "}\n\n";
+        String font = preferenceManager.getFontName();
+        String fontName = "";
+        if(!font.trim().equals("")) {
+            fontName = font.split("\\.")[0];
+            css += "@font-face {\n" +
+                    "    font-family: '" + fontName + "';\n" +
+                    "    src: url('" + font + "');\n" +
+                    "}\n\n";
+        }
 
         String style = "";
         if (preferenceManager.isItalic())
@@ -108,7 +113,7 @@ public class FormaterManager {
             css += "text-decoration: underline;\n";
 
         css += ".prefGlobal{\n";
-        css += "font:" + style + preferenceManager.getSize() + "px " + fontName + " Arial;\n";
+        css += "font:" + style + preferenceManager.getSize() + "px '" + fontName + "' Arial;\n";
         css += "color: "+String.format("#%06X", 0xFFFFFF & preferenceManager.getColor(PreferenceManager.PREFS_TEXT_COLOR))+"; \n";
         css += "background-color: "+String.format("#%06X", 0xFFFFFF & preferenceManager.getColor(PreferenceManager.PREFS_BACK_COLOR))+"; \n" + "}\n\n";
 
@@ -127,7 +132,7 @@ public class FormaterManager {
                 css += "text-decoration: underline;\n";
 
 
-            css += "font:" + style + setting.getSize() + "px " + fontName + " Arial;\n";
+            css += "font:" + style + setting.getSize() + "px '" + fontName + "' Arial;\n";
             css += "}\n\n";
         }
 

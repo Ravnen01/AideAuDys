@@ -131,7 +131,7 @@ public class PhotoTokenAssync extends AsyncTask<Integer, Integer,String> {
     protected void onPostExecute(String o) {
         super.onPostExecute(o);
         progressBar.setVisibility(View.INVISIBLE);
-        wvPhotoToken.loadData(o, "text/html; charset=UTF-8",null);
+        wvPhotoToken.loadDataWithBaseURL("file:///android_asset/Fonts/",o, "text/html","utf-8",null);
     }
 
     public interface OnFinishListener{

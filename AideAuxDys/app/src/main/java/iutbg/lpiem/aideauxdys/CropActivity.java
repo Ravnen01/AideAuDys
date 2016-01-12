@@ -1,4 +1,4 @@
-package iutbg.lpiem.aideauxdys.Adapter;
+package iutbg.lpiem.aideauxdys;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
