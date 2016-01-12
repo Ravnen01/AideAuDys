@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="iutbg.lpiem.aideauxdys.Adapter.CropActivity">
+    tools:context="iutbg.lpiem.aideauxdys.CropActivity">
 
     <com.edmodo.cropper.CropImageView
         android:id="@+id/CropImageView_crop"
