@@ -32,20 +32,20 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
     private MenuItem itemPause;
     private WebView webView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_token);
+        recoText=getIntent().getStringExtra("recoString");
         android.support.v7.app.ActionBar actionBar=getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
 
         textReader = new TextReader(this);
         webView = (WebView) findViewById(R.id.wvTextToken);
-        ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
+        FormaterManager formaterManager=new FormaterManager(getApplicationContext());
+        webView.loadDataWithBaseURL("file:///android_asset/Fonts/",formaterManager.formatWithPref(recoText), "text/html","utf-8",null);
 
-        progressBar.setMax(10);
-        PhotoTokenAssync photoTokenAssync=new PhotoTokenAssync(this, webView,progressBar);
-        photoTokenAssync.execute();
     }
 
     @Override

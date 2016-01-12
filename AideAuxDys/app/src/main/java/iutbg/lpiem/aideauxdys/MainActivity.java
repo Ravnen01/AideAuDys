@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import iutbg.lpiem.aideauxdys.Adapter.CropActivity;
+
 
 public class MainActivity extends AppCompatActivity {
     public static final String PACKAGE_NAME = "iutbg.lpiem.aideauxdys";

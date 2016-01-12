@@ -1,5 +1,6 @@
 package iutbg.lpiem.aideauxdys;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -10,12 +11,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
 
 import iutbg.lpiem.aideauxdys.R;
+import iutbg.lpiem.aideauxdys.Task.PhotoTokenAssync;
 
 public class CropActivity extends AppCompatActivity {
     private CropImageView cropPhoto;
@@ -23,11 +26,15 @@ public class CropActivity extends AppCompatActivity {
     public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/";
     private String path;
     private Bitmap bitmap;
+    private Activity soi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop);
+        soi=this;
+        final ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar) ;
+        progressBar.setVisibility(View.INVISIBLE);
         this.path= DATA_PATH + "/ocr.jpg";
 
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -120,6 +127,10 @@ public class CropActivity extends AppCompatActivity {
         ibValide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cropPhoto.setVisibility(View.INVISIBLE);
+                bitmap=cropPhoto.getCroppedImage();
+                PhotoTokenAssync photoTokenAssync=new PhotoTokenAssync(soi,progressBar,bitmap);
+                photoTokenAssync.execute();
 
             }
         });
