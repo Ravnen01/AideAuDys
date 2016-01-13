@@ -92,7 +92,7 @@ public class CropActivity extends AppCompatActivity {
 
         ImageButton ibRotateLeft=(ImageButton)findViewById(R.id.ibRotateLeft);
         ImageButton ibRotateRight=(ImageButton)findViewById(R.id.ibRotateRight);
-        ImageButton ibValide=(ImageButton)findViewById(R.id.ibValidImage);
+        final ImageButton ibValide=(ImageButton)findViewById(R.id.ibValidImage);
 
         ibRotateLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +127,7 @@ public class CropActivity extends AppCompatActivity {
         ibValide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ibValide.setClickable(false);
                 cropPhoto.setVisibility(View.INVISIBLE);
                 bitmap=cropPhoto.getCroppedImage();
                 PhotoTokenAssync photoTokenAssync=new PhotoTokenAssync(soi,progressBar,bitmap);
