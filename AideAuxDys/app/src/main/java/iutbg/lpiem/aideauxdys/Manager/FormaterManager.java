@@ -135,7 +135,7 @@ public class FormaterManager {
             fontName = font.split("\\.")[0];
             css += "@font-face {\n" +
                     "    font-family: '" + fontName + "';\n" +
-                    "    src: url('" + font + "');\n" +
+                    "    src: url('file:///android_asset/Fonts/" + font + "');\n" +
                     "}\n\n";
         }
 

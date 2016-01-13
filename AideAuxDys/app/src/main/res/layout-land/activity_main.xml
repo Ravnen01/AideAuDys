@@ -11,14 +11,6 @@
     android:background="#b3f0ff">
 
     <ImageView
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/main_imgVw_setting"
-        android:layout_width="wrap_content"
-        android:src="@drawable/ic_action_setting"
-        android:layout_height="wrap_content" />
-
-    <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/ivSplashScreen"

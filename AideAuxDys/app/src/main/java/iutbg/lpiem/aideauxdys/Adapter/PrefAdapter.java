@@ -125,8 +125,9 @@ public class PrefAdapter extends BaseAdapter {
                     }
                     InputMethodManager in = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(v.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    return true;
                 }
-                return true;
+                return false;
             }
         });
 
