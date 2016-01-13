@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
-import android.widget.ProgressBar;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
@@ -22,15 +24,17 @@ import java.io.StringReader;
 
 import iutbg.lpiem.aideauxdys.Manager.FormaterManager;
 import iutbg.lpiem.aideauxdys.Manager.TextReader;
-import iutbg.lpiem.aideauxdys.Task.PhotoTokenAssync;
 
-public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAssync.OnFinishListener {
+public class TextTokenActivity extends AppCompatActivity{
     public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/";
     private TextReader textReader;
     private String recoText = "";
     private MenuItem itemPlay;
     private MenuItem itemPause;
     private WebView webView;
+    private Button btnEditer;
+    private EditText edtTextEdition;
+    private FormaterManager formaterManager;
 
 
     @Override
@@ -43,9 +47,32 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
 
         textReader = new TextReader(this);
         webView = (WebView) findViewById(R.id.wvTextToken);
-        FormaterManager formaterManager=new FormaterManager(getApplicationContext());
-        webView.loadDataWithBaseURL("file:///android_asset/Fonts/",formaterManager.formatWithPref(recoText), "text/html","utf-8",null);
+        btnEditer = (Button) findViewById(R.id.textToken_Button_editer);
+        edtTextEdition = (EditText) findViewById(R.id.textToken_EdtText);
 
+        formaterManager = new FormaterManager(getApplicationContext());
+        webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html","utf-8",null);
+        edtTextEdition.setText(recoText);
+
+        btnEditer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(webView.getVisibility() == View.GONE) {
+                    btnEditer.setText(getString(R.string.textToken_editer));
+
+                    webView.setVisibility(View.VISIBLE);
+                    edtTextEdition.setVisibility(View.GONE);
+
+                    recoText = edtTextEdition.getText().toString();
+                    webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html","utf-8",null);
+                }else {
+                    btnEditer.setText(getString(R.string.textToken_Save));
+
+                    webView.setVisibility(View.GONE);
+                    edtTextEdition.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     @Override
@@ -96,15 +123,7 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
         itemPause = menu.findItem(R.id.action_pause);
         itemPause.setVisible(false);
 
-
         return true;
-    }
-
-    @Override
-    public void onFinishSuccess(String data) {
-        recoText = data;
-        FormaterManager formaterManager = new FormaterManager(this);
-        webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(data), "text/html", "utf-8", null);
     }
 
     @Override

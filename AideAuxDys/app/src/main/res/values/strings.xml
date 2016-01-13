@@ -18,4 +18,6 @@
     <string name="menu_play">Lecture texte</string>
     <string name="menu_parteger">Partager</string>
     <string name="shareFile">Partager un fichier</string>
+    <string name="textToken_editer">Editer texte</string>
+    <string name="textToken_Save">Sauvegarder</string>
 </resources>
