@@ -18,14 +18,20 @@ import android.widget.ListView;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
 
 import iutbg.lpiem.aideauxdys.Adapter.ChoixPrefAdapteur;
 import iutbg.lpiem.aideauxdys.Interface.Observeur;
+import iutbg.lpiem.aideauxdys.Manager.FileUtils;
 import iutbg.lpiem.aideauxdys.Manager.FormaterManager;
 import iutbg.lpiem.aideauxdys.Manager.TextReader;
 
@@ -57,8 +63,8 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur{
         btnEditer = (Button) findViewById(R.id.textToken_Button_editer);
         edtTextEdition = (EditText) findViewById(R.id.textToken_EdtText);
 
-        iconPause = getDrawable(android.R.drawable.ic_media_pause);
-        iconPlay = getDrawable(android.R.drawable.ic_media_play);
+        iconPause = getResources().getDrawable(android.R.drawable.ic_media_pause);
+        iconPlay = getResources().getDrawable(android.R.drawable.ic_media_play);
 
         formaterManager = new FormaterManager(getApplicationContext());
         webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
@@ -88,6 +94,12 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_playPause:
+                if (itemPlayPause.getIcon().equals(iconPlay))
+                    readText();
+                else
+                    pauseReader();
+                return true;
             case android.R.id.home:
                 // app icon in action bar clicked; goto parent activity.
                 this.finish();
@@ -95,12 +107,6 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur{
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingActivity.class);
                 startActivity(intent);
-                return true;
-            case R.id.action_playPause:
-                if (itemPlayPause.getIcon().equals(iconPlay))
-                    readText();
-                else
-                    pauseReader();
                 return true;
             case R.id.action_partage:
                 createPDF();
