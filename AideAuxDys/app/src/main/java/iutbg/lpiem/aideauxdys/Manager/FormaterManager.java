@@ -2,7 +2,6 @@ package iutbg.lpiem.aideauxdys.Manager;
 
 import android.content.Context;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +16,36 @@ public class FormaterManager {
     public FormaterManager(Context context) {
         settingDAO = new SettingDAO(context);
         preferenceManager = new PreferenceManager(context);
+    }
+
+    public String formatWithDecoupe(String text) {
+        Decoupe decoupe;
+
+        List<String> splitList = new ArrayList<>();
+        text = text.replaceAll("[,.!?;:()]", " $0 ");
+        Collections.addAll(splitList, text.split("((?<= )|(?= ))"));
+
+        for (int i = 0; i < splitList.size(); i++) {
+            String mot = splitList.get(i);
+            if (mot.length() > 2) {
+                decoupe = new Decoupe(mot);
+                List<String> motSyllabe = decoupe.getSyllabe();
+                if (motSyllabe.size() > 1) {
+                    splitList.remove(i);
+                    for (int j = motSyllabe.size()-1; j >= 0; j--) {
+                        splitList.add(i, motSyllabe.get(j));
+                    }
+                }
+            }
+        }
+
+        String[] listCouleur = {"#008000","#0000ff","#ff0000"};
+        String finalText = "";
+        for(int i = 0; i < splitList.size(); i++){
+            finalText += "<span style=\"color: "+listCouleur[i%3]+";\">"+splitList.get(i)+"</span>";
+        }
+
+        return finalText;
     }
 
     public String formatWithPref(String text) {
@@ -53,14 +82,14 @@ public class FormaterManager {
             }
         }
 
-        String html = ListToString(splitList);
+        String html = listToString(splitList);
 
         html = generateCSSfromPref(html, settingList);
 
         return html;
     }
 
-    private String ListToString(List<String> splitList) {
+    private String listToString(List<String> splitList) {
         String finalString = "";
         for (String part : splitList) {
             finalString += part;
@@ -86,7 +115,7 @@ public class FormaterManager {
             if (splitList.get(i).contains(setting.getSchema())) {
                 splitList.add(i + 1, "</span>");
                 splitList.add(i, "<span class=\"pref" + setting.getId() + "\">");
-                i+=2;
+                i += 2;
             }
         }
     }
@@ -96,13 +125,13 @@ public class FormaterManager {
                 "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \n" +
                 "   \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
                 "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
-                "    <head>\n"  +
+                "    <head>\n" +
                 "        <style type=\"text/css\">\n";
 
         // Global pref
         String font = preferenceManager.getFontName();
         String fontName = "";
-        if(!font.trim().equals("")) {
+        if (!font.trim().equals("")) {
             fontName = font.split("\\.")[0];
             css += "@font-face {\n" +
                     "    font-family: '" + fontName + "';\n" +
@@ -120,8 +149,8 @@ public class FormaterManager {
 
         css += ".prefGlobal{\n";
         css += "font:" + style + preferenceManager.getSize() + "px '" + fontName + "' Arial;\n";
-        css += "color: "+String.format("#%06X", 0xFFFFFF & preferenceManager.getColor(PreferenceManager.PREFS_TEXT_COLOR))+"; \n";
-        css += "background-color: "+String.format("#%06X", 0xFFFFFF & preferenceManager.getColor(PreferenceManager.PREFS_BACK_COLOR))+"; \n" + "}\n\n";
+        css += "color: " + String.format("#%06X", 0xFFFFFF & preferenceManager.getColor(PreferenceManager.PREFS_TEXT_COLOR)) + "; \n";
+        css += "background-color: " + String.format("#%06X", 0xFFFFFF & preferenceManager.getColor(PreferenceManager.PREFS_BACK_COLOR)) + "; \n" + "}\n\n";
 
         // Custom prefs
         for (Setting setting : settingList) {

@@ -189,4 +189,10 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
         // Cas des pickers des preferences custom
         ((PrefAdapter)lstVwSetting.getAdapter()).setColorPickerValue(color, position);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ((PrefAdapter)lstVwSetting.getAdapter()).savePrefs();
+    }
 }
