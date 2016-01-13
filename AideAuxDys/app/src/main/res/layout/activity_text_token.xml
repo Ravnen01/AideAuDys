@@ -4,39 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="iutbg.lpiem.aideauxdys.TextTokenActivity">
-
-    <WebView
-        android:id="@+id/wvTextToken"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true" />
-
+    
     <ListView
+        android:id="@+id/lvChoixPref"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_gravity="start"
-        android:choiceMode="singleChoice"
         android:background="#ffffff"
-        android:id="@+id/lvChoixPref"
-        />
+        android:choiceMode="singleChoice" />
 
-    <EditText
-        android:id="@+id/textToken_EdtText"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:visibility="gone" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/textToken_Button_editer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_margin="15dp"
-        android:layout_alignParentBottom="true"
-        android:text="@string/textToken_editer" />
+        <WebView
+            android:id="@+id/wvTextToken"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <EditText
+            android:id="@+id/textToken_EdtText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/textToken_Button_editer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="15dp"
+            android:text="@string/textToken_editer" />
+    </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

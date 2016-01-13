@@ -5,19 +5,15 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.speech.tts.TextToSpeech;
-import android.speech.tts.UtteranceProgressListener;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
@@ -27,15 +23,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
-import java.util.Observable;
-import java.util.Observer;
 
 import iutbg.lpiem.aideauxdys.Adapter.ChoixPrefAdapteur;
 import iutbg.lpiem.aideauxdys.Interface.Observeur;
 import iutbg.lpiem.aideauxdys.Manager.FormaterManager;
 import iutbg.lpiem.aideauxdys.Manager.TextReader;
 
-public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAssync.OnFinishListener, Observeur{
+public class TextTokenActivity extends AppCompatActivity implements Observeur{
     public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/";
     private TextReader textReader;
     private String recoText = "";
@@ -185,7 +179,7 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
     public void update() {
         webView = (WebView) findViewById(R.id.wvTextToken);
         FormaterManager formaterManager=new FormaterManager(getApplicationContext());
-        webView.loadDataWithBaseURL("file:///android_asset/Fonts/",formaterManager.formatWithPref(recoText), "text/html","utf-8",null);
+        webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithPref(recoText), "text/html", "utf-8", null);
     }
 
     @Override
