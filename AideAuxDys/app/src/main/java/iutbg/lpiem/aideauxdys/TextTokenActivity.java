@@ -1,9 +1,12 @@
 package iutbg.lpiem.aideauxdys;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,8 +32,8 @@ public class TextTokenActivity extends AppCompatActivity{
     public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/";
     private TextReader textReader;
     private String recoText = "";
-    private MenuItem itemPlay;
-    private MenuItem itemPause;
+    private MenuItem itemPlayPause;
+    private Drawable iconPlay, iconPause;
     private WebView webView;
     private Button btnEditer;
     private EditText edtTextEdition;
@@ -50,22 +53,25 @@ public class TextTokenActivity extends AppCompatActivity{
         btnEditer = (Button) findViewById(R.id.textToken_Button_editer);
         edtTextEdition = (EditText) findViewById(R.id.textToken_EdtText);
 
+        iconPause = getDrawable(android.R.drawable.ic_media_pause);
+        iconPlay = getDrawable(android.R.drawable.ic_media_play);
+
         formaterManager = new FormaterManager(getApplicationContext());
-        webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html","utf-8",null);
+        webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
         edtTextEdition.setText(recoText);
 
         btnEditer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(webView.getVisibility() == View.GONE) {
+                if (webView.getVisibility() == View.GONE) {
                     btnEditer.setText(getString(R.string.textToken_editer));
 
                     webView.setVisibility(View.VISIBLE);
                     edtTextEdition.setVisibility(View.GONE);
 
                     recoText = edtTextEdition.getText().toString();
-                    webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html","utf-8",null);
-                }else {
+                    webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
+                } else {
                     btnEditer.setText(getString(R.string.textToken_Save));
 
                     webView.setVisibility(View.GONE);
@@ -86,11 +92,11 @@ public class TextTokenActivity extends AppCompatActivity{
                 Intent intent = new Intent(this, SettingActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.action_play:
-                readText();
-                return true;
-            case R.id.action_pause:
-                pauseReader();
+            case R.id.action_playPause:
+                if (itemPlayPause.getIcon().equals(iconPlay))
+                    readText();
+                else
+                    pauseReader();
                 return true;
             case R.id.action_partage:
                 createPDF();
@@ -103,25 +109,29 @@ public class TextTokenActivity extends AppCompatActivity{
     private void pauseReader() {
         if (textReader.isSpeaking()) {
             textReader.stopSpeaking();
-            itemPause.setVisible(false);
-            itemPlay.setVisible(true);
         }
+        switchButtonSpeak();
     }
 
     private void readText() {
         if (textReader.isInit() && !recoText.equals("")) {
             textReader.say(recoText);
-            itemPlay.setVisible(false);
-            itemPause.setVisible(true);
+            switchButtonSpeak();
+        }
+    }
+
+    private void switchButtonSpeak(){
+        if (itemPlayPause.getIcon().equals(iconPause)) {
+            itemPlayPause.setIcon(iconPlay);
+        } else{
+            itemPlayPause.setIcon(iconPause);
         }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-        itemPlay = menu.findItem(R.id.action_play);
-        itemPause = menu.findItem(R.id.action_pause);
-        itemPause.setVisible(false);
+        itemPlayPause = menu.findItem(R.id.action_playPause);
 
         return true;
     }

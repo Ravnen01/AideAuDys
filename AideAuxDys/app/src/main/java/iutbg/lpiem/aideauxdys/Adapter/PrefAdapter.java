@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,25 +112,18 @@ public class PrefAdapter extends BaseAdapter {
             }
         });
 
-        viewHolder.edtSchema.addTextChangedListener(new TextWatcher() {
+        viewHolder.edtSchema.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (position < settingList.size()) {
-                    // Si le text est different
-                    if (!getItem(position).getSchema().equals(s.toString())) {
-                        getItem(position).setSchema(s.toString());
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (position < settingList.size()) {
+                        // Si le text est different
+                        if (!getItem(position).getSchema().equals(v.getText().toString())) {
+                            getItem(position).setSchema(v.getText().toString());
+                        }
                     }
                 }
+                return true;
             }
         });
 

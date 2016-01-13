@@ -2,8 +2,9 @@ package iutbg.lpiem.aideauxdys.Manager;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 
-public class TextReader implements TextToSpeech.OnInitListener{
+public class TextReader implements TextToSpeech.OnInitListener {
     private TextToSpeech textToSpeech;
     private Context context;
     private boolean isInit;
@@ -12,7 +13,6 @@ public class TextReader implements TextToSpeech.OnInitListener{
         this.context = context;
         isInit = false;
         textToSpeech = new TextToSpeech(context, this);
-
     }
 
     @Override
