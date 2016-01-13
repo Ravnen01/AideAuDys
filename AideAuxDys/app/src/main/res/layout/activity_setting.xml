@@ -210,7 +210,6 @@
                 android:layout_height="1dp"
                 android:layout_below="@id/setting_txt_custom"
                 android:layout_marginBottom="20dp"
-                android:focusableInTouchMode="true"
                 android:background="#000"
                 android:orientation="horizontal" />
 
@@ -218,6 +217,8 @@
                 android:id="@+id/setting_lstVw_pref"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
                 android:layout_above="@+id/setting_bttn_add"
                 android:layout_below="@id/setting_layout_space2" />
 

@@ -18,6 +18,7 @@
         style="@style/AppTheme.Text.Large"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:inputType="text"
         android:layout_weight="1"
         android:gravity="center"
         android:hint="@string/setting_schema" />

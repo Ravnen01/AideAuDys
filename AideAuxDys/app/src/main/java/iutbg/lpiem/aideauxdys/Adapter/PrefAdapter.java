@@ -91,9 +91,12 @@ public class PrefAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 v.setEnabled(false);
-                settingDAO.open();
-                settingDAO.remove(settingList.get(position).getId());
-                settingDAO.close();
+                long id = settingList.get(position).getId();
+                if (id != -1) {
+                    settingDAO.open();
+                    settingDAO.remove(id);
+                    settingDAO.close();
+                }
                 settingList.remove(position);
                 notifyDataSetChanged();
             }
@@ -123,10 +126,6 @@ public class PrefAdapter extends BaseAdapter {
                     // Si le text est different
                     if (!getItem(position).getSchema().equals(s.toString())) {
                         getItem(position).setSchema(s.toString());
-
-                        settingDAO.open();
-                        settingDAO.update(getItem(position));
-                        settingDAO.close();
                     }
                 }
             }
@@ -148,15 +147,16 @@ public class PrefAdapter extends BaseAdapter {
                 if (position < settingList.size()) {
                     // Si le text est different
                     String chaine = s.toString();
-                    if (settingList.get(position).getSize() != Integer.parseInt(chaine)) {
-                        Setting setting = settingList.get(position);
-                        if (!chaine.equals("")) {
-                            setting.setSize(Integer.parseInt(chaine));
 
-                            settingDAO.open();
-                            settingDAO.update(setting);
-                            settingDAO.close();
-                        }
+
+                    int taille = 16;
+                    if (!chaine.trim().equals(""))
+                        taille = Integer.parseInt(chaine);
+
+                    if (settingList.get(position).getSize() != taille) {
+                        Setting setting = settingList.get(position);
+                        setting.setSize(taille);
+
                     }
                 }
             }
@@ -184,10 +184,6 @@ public class PrefAdapter extends BaseAdapter {
                         setting.setUnderline(isUnderline);
                         break;
                 }
-
-                settingDAO.open();
-                settingDAO.update(setting);
-                settingDAO.close();
             }
         };
         viewHolder.btnBold.setOnClickListener(clickStyle);
@@ -203,14 +199,8 @@ public class PrefAdapter extends BaseAdapter {
     }
 
     public void addSetting() {
-        Setting setting = new Setting(0, "", false, false, false, 16, 0xFF000000, true);
-
-        settingDAO.open();
-        long id = settingDAO.add(setting);
-        setting.setId(id);
-        settingDAO.close();
-
-        settingList.add(settingList.size(),setting);
+        Setting setting = new Setting(-1, "", false, false, false, 16, 0xFF000000, true);
+        settingList.add(setting);
         notifyDataSetChanged();
     }
 
@@ -231,10 +221,18 @@ public class PrefAdapter extends BaseAdapter {
         setting.setColor(color);
         notifyDataSetChanged();
 
-        settingDAO.open();
-        settingDAO.update(setting);
-        settingDAO.close();
 
+    }
+
+    public void savePrefs() {
+        settingDAO.open();
+        for (Setting setting : settingList) {
+            if (setting.getId() != -1)
+                settingDAO.update(setting);
+            else
+                settingDAO.add(setting);
+        }
+        settingDAO.close();
     }
 
     private class ViewHolder {
