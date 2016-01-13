@@ -104,7 +104,7 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
     public void onFinishSuccess(String data) {
         recoText = data;
         FormaterManager formaterManager = new FormaterManager(this);
-        webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithPref(data), "text/html", "utf-8", null);
+        webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(data), "text/html", "utf-8", null);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class TextTokenActivity extends AppCompatActivity implements PhotoTokenAs
             document.open();
             HTMLWorker htmlWorker = new HTMLWorker(document);
             FormaterManager formaterManager=new FormaterManager(getApplicationContext());
-            String str = formaterManager.formatWithPref(recoText);
+            String str = formaterManager.formatWithDecoupe(recoText);
             htmlWorker.parse(new StringReader(str));
             document.close();
             file.close();
