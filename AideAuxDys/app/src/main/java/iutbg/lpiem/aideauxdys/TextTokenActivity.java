@@ -1,5 +1,6 @@
 package iutbg.lpiem.aideauxdys;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -29,23 +30,27 @@ import java.io.StringReader;
 import java.util.List;
 
 import iutbg.lpiem.aideauxdys.Adapter.ChoixPrefAdapteur;
+
 import iutbg.lpiem.aideauxdys.DataBase.SettingDAO;
+
+import iutbg.lpiem.aideauxdys.Fragment.TextTokenFragment;
+
 import iutbg.lpiem.aideauxdys.Interface.Observeur;
 import iutbg.lpiem.aideauxdys.Manager.FormaterManager;
 import iutbg.lpiem.aideauxdys.Manager.PreferenceManager;
 import iutbg.lpiem.aideauxdys.Manager.TextReader;
 import iutbg.lpiem.aideauxdys.Model.Setting;
 
-public class TextTokenActivity extends AppCompatActivity implements Observeur {
+
+public class TextTokenActivity extends AppCompatActivity{
+
     public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/";
     private TextReader textReader;
     private String recoText = "";
     private MenuItem itemPlayPause;
     private Drawable iconPlay, iconPause;
-    private WebView webView;
-    private Button btnEditer;
-    private EditText edtTextEdition;
-    private FormaterManager formaterManager;
+    private TextTokenFragment fragment;
+
 
 
     @Override
@@ -55,41 +60,25 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur {
         recoText = getIntent().getStringExtra("recoString");
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
-        ListView listView = (ListView) findViewById(R.id.lvChoixPref);
-        ChoixPrefAdapteur adpteur = new ChoixPrefAdapteur(getApplicationContext());
-        adpteur.addObserveur(this);
+
+        fragment=new TextTokenFragment();
+        fragment.setRecoText(recoText);
+        ListView listView=(ListView)findViewById(R.id.lvChoixPref);
+        ChoixPrefAdapteur adpteur=new ChoixPrefAdapteur(getApplicationContext());
+        adpteur.addObserveur(fragment);
+
         listView.setAdapter(adpteur);
+
+
         textReader = new TextReader(this);
-        webView = (WebView) findViewById(R.id.wvTextToken);
-        btnEditer = (Button) findViewById(R.id.textToken_Button_editer);
-        edtTextEdition = (EditText) findViewById(R.id.textToken_EdtText);
+        getFragmentManager().beginTransaction().replace(R.id.flMainActivity, fragment).commit();
 
         iconPause = getResources().getDrawable(android.R.drawable.ic_media_pause);
         iconPlay = getResources().getDrawable(android.R.drawable.ic_media_play);
 
-        formaterManager = new FormaterManager(getApplicationContext());
-        webView.loadDataWithBaseURL(DATA_PATH, formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
-        edtTextEdition.setText(recoText);
 
-        btnEditer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (webView.getVisibility() == View.GONE) {
-                    btnEditer.setText(getString(R.string.textToken_editer));
+        
 
-                    webView.setVisibility(View.VISIBLE);
-                    edtTextEdition.setVisibility(View.GONE);
-
-                    recoText = edtTextEdition.getText().toString();
-                    webView.loadDataWithBaseURL(DATA_PATH, formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
-                } else {
-                    btnEditer.setText(getString(R.string.textToken_Save));
-
-                    webView.setVisibility(View.GONE);
-                    edtTextEdition.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
     @Override
@@ -126,7 +115,7 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur {
 
     private void readText() {
         if (textReader.isInit() && !recoText.equals("")) {
-            textReader.say(recoText);
+            textReader.say(fragment.getRecoText());
             switchButtonSpeak();
         }
     }
@@ -201,23 +190,22 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur {
     }
 
 
-    @Override
-    public void update() {
-        webView = (WebView) findViewById(R.id.wvTextToken);
-        FormaterManager formaterManager = new FormaterManager(getApplicationContext());
-        webView.loadDataWithBaseURL(DATA_PATH, formaterManager.generateCSSfromPref(formaterManager.formatWithPref(recoText)), "text/html", "utf-8", null);
-    }
+
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        ListView listView = (ListView) findViewById(R.id.lvChoixPref);
-        ChoixPrefAdapteur adpteur = new ChoixPrefAdapteur(getApplicationContext());
-        adpteur.addObserveur(this);
+
+        ListView listView=(ListView)findViewById(R.id.lvChoixPref);
+        ChoixPrefAdapteur adpteur=new ChoixPrefAdapteur(getApplicationContext());
+        recoText=fragment.getRecoText();
+        fragment=new TextTokenFragment();
+        fragment.setRecoText(recoText);
+
+        adpteur.addObserveur(fragment);
         listView.setAdapter(adpteur);
 
-        webView = (WebView) findViewById(R.id.wvTextToken);
-        FormaterManager formaterManager = new FormaterManager(getApplicationContext());
-        webView.loadDataWithBaseURL(DATA_PATH, formaterManager.generateCSSfromPref(formaterManager.formatWithPref(recoText)), "text/html", "utf-8", null);
+        getFragmentManager().beginTransaction().replace(R.id.flMainActivity, fragment).commit();
+
     }
 }
