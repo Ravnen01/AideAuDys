@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,12 +33,16 @@ public class MainActivity extends AppCompatActivity {
     protected boolean taken;
     private static final int SELECT_PHOTO=12;
     private static final int CAPTURE_PHOTO=11;
+    private LinearLayout layoutLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
+
+        layoutLoading = (LinearLayout) findViewById(R.id.main_layout_loading);
 
         ImageView imgSetting = (ImageView)findViewById(R.id.ivOption);
         imgSetting.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         imgImportImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                layoutLoading.setVisibility(View.VISIBLE);
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
@@ -185,5 +191,11 @@ public class MainActivity extends AppCompatActivity {
     protected void starActivityResizePhoto(){
         Intent intent=new Intent(this,CropActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        layoutLoading.setVisibility(View.GONE);
     }
 }

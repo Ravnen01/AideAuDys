@@ -10,49 +10,45 @@
     tools:context="iutbg.lpiem.aideauxdys.CropActivity">
 
     <com.edmodo.cropper.CropImageView
+        android:layout_centerInParent="true"
         android:id="@+id/CropImageView_crop"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/crop_layout_container"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_above="@+id/ibRotateLeft"
-        android:layout_alignParentTop="true" />
-
-
+        android:layout_below="@+id/CropImageView_crop"
+        android:gravity="center"
+        android:layout_height="wrap_content">
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/ibRotateLeft"
-            android:src="@drawable/ic_action_rotate_image_left"
-            android:layout_alignTop="@+id/ibValidImage"
-            android:layout_toRightOf="@+id/ibValidImage"
-            android:layout_toEndOf="@+id/ibValidImage" />
-
-        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_rotate_image_left" />
+
+        <ImageButton
             android:id="@+id/ibRotateRight"
-            android:src="@drawable/ic_action_rotate_image_right"
-            android:layout_alignTop="@+id/ibRotateLeft"
-            android:layout_toRightOf="@+id/ibRotateLeft"
-            android:layout_toEndOf="@+id/ibRotateLeft" />
-
-        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_rotate_image_right" />
+
+        <ImageButton
             android:id="@+id/ibValidImage"
-            android:src="@drawable/ic_action_valid_image"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_valid_image" />
+    </LinearLayout>
 
     <ProgressBar
+        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:id="@+id/progressBar"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_centerVertical="true" />
 
 
 </RelativeLayout>
