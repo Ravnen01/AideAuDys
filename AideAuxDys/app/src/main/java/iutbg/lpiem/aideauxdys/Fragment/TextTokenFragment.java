@@ -51,7 +51,7 @@ public class TextTokenFragment extends Fragment implements Observeur{
         edtTextEdition.setText(recoText);
 
         PreferenceManager preferenceManager=new PreferenceManager(view.getContext());
-        if(preferenceManager.getIsCutSyllabe()) {
+        if(preferenceManager.isCutSyllabe()) {
             webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
         }else{
             webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.generateCSSfromPref(formaterManager.formatWithPref(recoText)), "text/html","utf-8",null);
@@ -69,7 +69,7 @@ public class TextTokenFragment extends Fragment implements Observeur{
 
                     recoText = edtTextEdition.getText().toString();
                     PreferenceManager preferenceManager=new PreferenceManager(view.getContext());
-                    if(preferenceManager.getIsCutSyllabe()) {
+                    if(preferenceManager.isCutSyllabe()) {
                         webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
                     }else{
                         webView.loadDataWithBaseURL("file:///android_asset/Fonts/",formaterManager.generateCSSfromPref(formaterManager.formatWithPref(recoText)), "text/html","utf-8",null);

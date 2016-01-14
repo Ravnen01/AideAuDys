@@ -138,6 +138,7 @@ public class TextTokenActivity extends AppCompatActivity{
     }
 
     private void createPDF() {
+        PreferenceManager preferenceManager = new PreferenceManager(this);
         FormaterManager formaterManager = new FormaterManager(getApplicationContext());
         try {
             OutputStream file = new FileOutputStream(new File(DATA_PATH + "test.pdf"));
@@ -146,7 +147,13 @@ public class TextTokenActivity extends AppCompatActivity{
             document.open();
             HTMLWorker htmlWorker = new HTMLWorker(document);
             htmlWorker.setStyleSheet(generateStyleSheet());
-            String str = "<html><body>"+formaterManager.formatWithPref(fragment.getRecoText())+"</body></html>";
+
+            String str;
+            if(!preferenceManager.isCutSyllabe())
+                str = "<html><body>"+formaterManager.formatWithPref(fragment.getRecoText())+"</body></html>";
+            else
+                str = formaterManager.formatWithDecoupe(fragment.getRecoText());
+
             htmlWorker.parse(new StringReader(str));
             document.close();
             file.close();

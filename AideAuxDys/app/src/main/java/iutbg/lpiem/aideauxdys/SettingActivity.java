@@ -67,7 +67,7 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
         setButtonStyle(btnUnderLine, preferenceManager.isUnderLine());
 
         edtTxtSize.setText(String.valueOf(preferenceManager.getSize()));
-        switchSyllabe.setChecked(preferenceManager.getIsCutSyllabe());
+        switchSyllabe.setChecked(preferenceManager.isCutSyllabe());
         lstVwSetting.setAdapter(new PrefAdapter(this));
 
         imgTxtColor.setBackgroundColor(preferenceManager.getColor(PreferenceManager.PREFS_TEXT_COLOR));
