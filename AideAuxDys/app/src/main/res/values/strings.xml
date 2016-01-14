@@ -20,4 +20,5 @@
     <string name="shareFile">Partager un fichier</string>
     <string name="textToken_editer">Editer texte</string>
     <string name="textToken_Save">Sauvegarder</string>
+    <string name="interligne">Interlignes</string>
 </resources>

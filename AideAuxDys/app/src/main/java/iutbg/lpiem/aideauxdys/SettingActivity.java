@@ -40,6 +40,8 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
         imgTxtColor = (ImageView) findViewById(R.id.setting_imgVw_txtColor);
         imgBackColor = (ImageView) findViewById(R.id.setting_imgVw_backColor);
         EditText edtTxtSize = (EditText) findViewById(R.id.setting_edtTxt_txtSize);
+        EditText edtTxtInterligne = (EditText) findViewById(R.id.setting_edtTxt_txtInterLigne);
+        EditText edtTxtSpaceLetter = (EditText) findViewById(R.id.setting_edtTxt_txtSpaceLetter);
         Button btnBold = (Button) findViewById(R.id.setting_bttn_bold);
         Button btnItalic = (Button) findViewById(R.id.setting_bttn_italic);
         Button btnUnderLine = (Button) findViewById(R.id.setting_bttn_underline);
@@ -67,6 +69,8 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
         setButtonStyle(btnUnderLine, preferenceManager.isUnderLine());
 
         edtTxtSize.setText(String.valueOf(preferenceManager.getSize()));
+        edtTxtInterligne.setText(String.valueOf(preferenceManager.getInterLigne()));
+        edtTxtSpaceLetter.setText(String.valueOf(preferenceManager.getSpaceLetter()));
         switchSyllabe.setChecked(preferenceManager.isCutSyllabe());
         lstVwSetting.setAdapter(new PrefAdapter(this));
 
@@ -129,6 +133,46 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
                 if (!s.toString().equals("")) {
                     int size = Integer.parseInt(s.toString());
                     preferenceManager.saveTextSize(size);
+                }
+            }
+        });
+        edtTxtSpaceLetter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Si le champ n'est pas vide
+                if (!s.toString().equals("")) {
+                    int size = Integer.parseInt(s.toString());
+                    preferenceManager.saveSpaceLetter(size);
+                }
+            }
+        });
+        edtTxtInterligne.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Si le champ n'est pas vide
+                if (!s.toString().equals("")) {
+                    int size = Integer.parseInt(s.toString());
+                    preferenceManager.saveInterLigne(size);
                 }
             }
         });

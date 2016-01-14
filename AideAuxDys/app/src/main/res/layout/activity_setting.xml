@@ -60,6 +60,40 @@
                     android:gravity="center"
                     tools:text="maFont.ttf" />
 
+                <TextView
+                    style="@style/AppTheme.Text.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/interligne" />
+
+                <EditText
+                    android:id="@+id/setting_edtTxt_txtInterLigne"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:hint="2"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/AppTheme.Text.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Espacement" />
+
+                <EditText
+                    android:id="@+id/setting_edtTxt_txtSpaceLetter"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:hint="1"
+                    android:inputType="number" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -212,10 +246,10 @@
                 android:id="@+id/setting_lstVw_pref"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusableInTouchMode="true"
-                android:focusable="true"
                 android:layout_above="@+id/setting_bttn_add"
-                android:layout_below="@id/setting_layout_space2" />
+                android:layout_below="@id/setting_layout_space2"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
 
             <Button
                 android:id="@+id/setting_bttn_add"

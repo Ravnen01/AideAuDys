@@ -168,7 +168,7 @@ public class FormaterManager {
         if (preferenceManager.isUnderLine())
             globalCss += "text-decoration: underline;";
 
-        globalCss += "font:" + style + preferenceManager.getSize() + "px '" + fontName + "' Arial;";
+        globalCss += "font:" + style + preferenceManager.getSize() + "px '" + fontName + "' Arial;line-height: "+preferenceManager.getInterLigne()+";"+"letter-spacing: "+preferenceManager.getSpaceLetter()+"px;";
 
         /*String style = "";
         if (preferenceManager.isItalic())

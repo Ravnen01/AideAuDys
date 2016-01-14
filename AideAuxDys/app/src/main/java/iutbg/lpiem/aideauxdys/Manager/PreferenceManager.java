@@ -12,6 +12,8 @@ public class PreferenceManager {
     private static final String PREFS_ITALIC = "italique";
     private static final String PREFS_TEXT_SYLLABE = "syllabe";
     private static final String PREFS_TEXT_FONT = "textFont";
+    private static final String PREFS_INTER_LINE = "interligne";
+    private static final String PREFS_SPACE_LETTER = "spaceLetter";
     private static final String PREFS_NAME = "SETTING";
     private SharedPreferences preferences;
     private Context context;
@@ -58,6 +60,38 @@ public class PreferenceManager {
      */
     public int getSize(){
         return preferences.getInt(PREFS_TEXT_SIZE, 20);
+    }
+
+    /**
+     * @param size
+     */
+    public void saveInterLigne(int size){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(PREFS_INTER_LINE, size);
+        editor.apply();
+    }
+
+    /**
+     * @return textSize
+     */
+    public int getInterLigne(){
+        return preferences.getInt(PREFS_INTER_LINE, 2);
+    }
+
+    /**
+     * @param size
+     */
+    public void saveSpaceLetter(int size){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(PREFS_SPACE_LETTER, size);
+        editor.apply();
+    }
+
+    /**
+     * @return textSize
+     */
+    public int getSpaceLetter(){
+        return preferences.getInt(PREFS_SPACE_LETTER, 1);
     }
 
     /**
