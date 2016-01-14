@@ -59,16 +59,11 @@ public class TextTokenActivity extends AppCompatActivity{
 
         listView.setAdapter(adpteur);
 
-
         textReader = new TextReader(this);
         getFragmentManager().beginTransaction().replace(R.id.flMainActivity, fragment).commit();
 
         iconPause = getResources().getDrawable(android.R.drawable.ic_media_pause);
         iconPlay = getResources().getDrawable(android.R.drawable.ic_media_play);
-
-
-        
-
     }
 
     @Override
@@ -121,8 +116,10 @@ public class TextTokenActivity extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-        itemPlayPause = menu.findItem(R.id.action_playPause);
 
+        itemPlayPause = menu.findItem(R.id.action_playPause);
+        itemPlayPause.setIcon(iconPlay);
+        
         return true;
     }
 
@@ -138,6 +135,7 @@ public class TextTokenActivity extends AppCompatActivity{
     }
 
     private void createPDF() {
+        PreferenceManager preferenceManager = new PreferenceManager(this);
         FormaterManager formaterManager = new FormaterManager(getApplicationContext());
         try {
             OutputStream file = new FileOutputStream(new File(DATA_PATH + "test.pdf"));
@@ -146,7 +144,13 @@ public class TextTokenActivity extends AppCompatActivity{
             document.open();
             HTMLWorker htmlWorker = new HTMLWorker(document);
             htmlWorker.setStyleSheet(generateStyleSheet());
-            String str = "<html><body>"+formaterManager.formatWithPref(fragment.getRecoText())+"</body></html>";
+
+            String str;
+            if(!preferenceManager.isCutSyllabe())
+                str = "<html><body>"+formaterManager.formatWithPref(fragment.getRecoText())+"</body></html>";
+            else
+                str = formaterManager.formatWithDecoupe(fragment.getRecoText());
+
             htmlWorker.parse(new StringReader(str));
             document.close();
             file.close();
@@ -161,10 +165,6 @@ public class TextTokenActivity extends AppCompatActivity{
     }
 
     private StyleSheet generateStyleSheet() {
-        SettingDAO settingDAO = new SettingDAO(this);
-        settingDAO.open();
-        List<Setting> settingList = settingDAO.getAll();
-        settingDAO.close();
         PreferenceManager preferenceManager = new PreferenceManager(this);
         String fontName = preferenceManager.getFontName();
         FontFactory.register("assets/Fonts/" + fontName, fontName.split("\\.")[0]);

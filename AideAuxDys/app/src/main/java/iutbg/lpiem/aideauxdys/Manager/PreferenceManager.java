@@ -136,7 +136,7 @@ public class PreferenceManager {
     /**
      * @return isCutsyllabe
      */
-    public Boolean getIsCutSyllabe(){
+    public Boolean isCutSyllabe(){
         return preferences.getBoolean(PREFS_TEXT_SYLLABE, false);
     }
 }
