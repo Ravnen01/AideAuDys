@@ -82,11 +82,7 @@ public class FormaterManager {
             }
         }
 
-        String html = listToString(splitList);
-
-        html = generateCSSfromPref(html, settingList);
-
-        return html;
+        return listToString(splitList);
     }
 
     private String listToString(List<String> splitList) {
@@ -111,16 +107,37 @@ public class FormaterManager {
     }
 
     private void addBalise(List<String> splitList, Setting setting) {
+        String line, css = "color:"+String.format("#%06X", 0xFFFFFF & setting.getColor())+";";
+        String font = preferenceManager.getFontName();
+        String fontName = "";
+        if (!font.trim().equals("")) {
+            fontName = font.split("\\.")[0];
+        }
+
+        String style = "";
+        if (setting.isItalic())
+            style += "italic ";
+        if (setting.isBold())
+            style += "bold ";
+        if (setting.isUnderline())
+            css += "text-decoration: underline;";
+
+        css += "font:" + style + setting.getSize() + "px '" + fontName + "' Arial;";
+
         for (int i = 0; i < splitList.size(); i++) {
             if (splitList.get(i).contains(setting.getSchema())) {
-                splitList.add(i + 1, "</span>");
-                splitList.add(i, "<span class=\"pref" + setting.getId() + "\">");
-                i += 2;
+                line = "<span style=\""+css+"\">"+splitList.get(i)+"</span>";
+                splitList.remove(i);
+                splitList.add(i,line);
             }
         }
     }
 
-    private String generateCSSfromPref(String html, List<Setting> settingList) {
+    public String generateCSSfromPref(String html) {
+        settingDAO.open();
+        List<Setting> settingList = settingDAO.getAll();
+        settingDAO.close();
+
         String css = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \n" +
                 "   \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
@@ -139,7 +156,21 @@ public class FormaterManager {
                     "}\n\n";
         }
 
+        String colorText = String.format("#%06X", 0xFFFFFF & preferenceManager.getColor(PreferenceManager.PREFS_TEXT_COLOR));
+        String colorBack = String.format("#%06X", 0xFFFFFF & preferenceManager.getColor(PreferenceManager.PREFS_BACK_COLOR));
+        String globalCss = "color:"+colorText+";background-color:"+colorBack+";";
+
         String style = "";
+        if (preferenceManager.isItalic())
+            style += "italic ";
+        if (preferenceManager.isBold())
+            style += "bold ";
+        if (preferenceManager.isUnderLine())
+            globalCss += "text-decoration: underline;";
+
+        globalCss += "font:" + style + preferenceManager.getSize() + "px '" + fontName + "' Arial;";
+
+        /*String style = "";
         if (preferenceManager.isItalic())
             style += "italic ";
         if (preferenceManager.isBold())
@@ -169,9 +200,9 @@ public class FormaterManager {
 
             css += "font:" + style + setting.getSize() + "px '" + fontName + "' Arial;\n";
             css += "}\n\n";
-        }
+        }*/
 
-        css += "</style>\n</head>\n<body class=\"prefGlobal\">\n";
+        css += "</style>\n</head>\n<body style=\""+globalCss+"\">\n";
 
         if (!html.isEmpty()) {
             css += html;

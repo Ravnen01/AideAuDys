@@ -16,26 +16,27 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.html.HtmlTags;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
+import com.itextpdf.text.html.simpleparser.StyleSheet;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.tool.xml.XMLWorkerHelper;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.util.List;
 
 import iutbg.lpiem.aideauxdys.Adapter.ChoixPrefAdapteur;
+import iutbg.lpiem.aideauxdys.DataBase.SettingDAO;
 import iutbg.lpiem.aideauxdys.Interface.Observeur;
-import iutbg.lpiem.aideauxdys.Manager.FileUtils;
 import iutbg.lpiem.aideauxdys.Manager.FormaterManager;
+import iutbg.lpiem.aideauxdys.Manager.PreferenceManager;
 import iutbg.lpiem.aideauxdys.Manager.TextReader;
+import iutbg.lpiem.aideauxdys.Model.Setting;
 
-public class TextTokenActivity extends AppCompatActivity implements Observeur{
+public class TextTokenActivity extends AppCompatActivity implements Observeur {
     public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/";
     private TextReader textReader;
     private String recoText = "";
@@ -51,11 +52,11 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_token);
-        recoText=getIntent().getStringExtra("recoString");
-        android.support.v7.app.ActionBar actionBar=getSupportActionBar();
+        recoText = getIntent().getStringExtra("recoString");
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
-        ListView listView=(ListView)findViewById(R.id.lvChoixPref);
-        ChoixPrefAdapteur adpteur=new ChoixPrefAdapteur(getApplicationContext());
+        ListView listView = (ListView) findViewById(R.id.lvChoixPref);
+        ChoixPrefAdapteur adpteur = new ChoixPrefAdapteur(getApplicationContext());
         adpteur.addObserveur(this);
         listView.setAdapter(adpteur);
         textReader = new TextReader(this);
@@ -67,7 +68,7 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur{
         iconPlay = getResources().getDrawable(android.R.drawable.ic_media_play);
 
         formaterManager = new FormaterManager(getApplicationContext());
-        webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
+        webView.loadDataWithBaseURL(DATA_PATH, formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
         edtTextEdition.setText(recoText);
 
         btnEditer.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +81,7 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur{
                     edtTextEdition.setVisibility(View.GONE);
 
                     recoText = edtTextEdition.getText().toString();
-                    webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
+                    webView.loadDataWithBaseURL(DATA_PATH, formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
                 } else {
                     btnEditer.setText(getString(R.string.textToken_Save));
 
@@ -130,10 +131,10 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur{
         }
     }
 
-    private void switchButtonSpeak(){
+    private void switchButtonSpeak() {
         if (itemPlayPause.getIcon().equals(iconPause)) {
             itemPlayPause.setIcon(iconPlay);
-        } else{
+        } else {
             itemPlayPause.setIcon(iconPause);
         }
     }
@@ -149,7 +150,6 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur{
     @Override
     protected void onPause() {
         super.onPause();
-        pauseReader();
     }
 
     @Override
@@ -158,46 +158,66 @@ public class TextTokenActivity extends AppCompatActivity implements Observeur{
         textReader.destroy();
     }
 
-    private void createPDF(){
-        try{
-            OutputStream file = new FileOutputStream(new File(Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/"+"test.pdf"));
+    private void createPDF() {
+        FormaterManager formaterManager = new FormaterManager(getApplicationContext());
+        try {
+            OutputStream file = new FileOutputStream(new File(DATA_PATH + "test.pdf"));
             Document document = new Document();
             PdfWriter.getInstance(document, file);
             document.open();
             HTMLWorker htmlWorker = new HTMLWorker(document);
-            FormaterManager formaterManager=new FormaterManager(getApplicationContext());
-            String str = formaterManager.formatWithDecoupe(recoText);
+            htmlWorker.setStyleSheet(generateStyleSheet());
+            String str = "<html><body>"+formaterManager.formatWithPref(recoText)+"</body></html>";
             htmlWorker.parse(new StringReader(str));
             document.close();
             file.close();
-            Intent i=new Intent(Intent.ACTION_SEND);
+            Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("application/pdf");
-            i.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(new File(Environment.getExternalStorageDirectory().toString() + "/AideAuxDysOCR/"+"test.pdf")));
-            startActivity(Intent.createChooser(i,getString(R.string.shareFile)));
+            i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(DATA_PATH + "test.pdf")));
+            startActivity(Intent.createChooser(i, getString(R.string.shareFile)));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    private StyleSheet generateStyleSheet() {
+        SettingDAO settingDAO = new SettingDAO(this);
+        settingDAO.open();
+        List<Setting> settingList = settingDAO.getAll();
+        settingDAO.close();
+        PreferenceManager preferenceManager = new PreferenceManager(this);
+        String fontName = preferenceManager.getFontName();
+        FontFactory.register("assets/Fonts/" + fontName, fontName.split("\\.")[0]);
+
+        StyleSheet css = new StyleSheet();
+
+        css.loadTagStyle("body", "face", fontName.split("\\.")[0]);
+        css.loadTagStyle("body", "size", preferenceManager.getSize() + "px");
+        css.loadTagStyle("body", "color", String.format("#%06X", 0xFFFFFF & preferenceManager.getColor(PreferenceManager.PREFS_TEXT_COLOR)));
+        css.loadTagStyle("body", "background-color", String.format("#%06X", 0xFFFFFF & preferenceManager.getColor(PreferenceManager.PREFS_BACK_COLOR)));
+
+        return css;
+    }
+
 
     @Override
     public void update() {
         webView = (WebView) findViewById(R.id.wvTextToken);
-        FormaterManager formaterManager=new FormaterManager(getApplicationContext());
-        webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithPref(recoText), "text/html", "utf-8", null);
+        FormaterManager formaterManager = new FormaterManager(getApplicationContext());
+        webView.loadDataWithBaseURL(DATA_PATH, formaterManager.generateCSSfromPref(formaterManager.formatWithPref(recoText)), "text/html", "utf-8", null);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        ListView listView=(ListView)findViewById(R.id.lvChoixPref);
-        ChoixPrefAdapteur adpteur=new ChoixPrefAdapteur(getApplicationContext());
+        ListView listView = (ListView) findViewById(R.id.lvChoixPref);
+        ChoixPrefAdapteur adpteur = new ChoixPrefAdapteur(getApplicationContext());
         adpteur.addObserveur(this);
         listView.setAdapter(adpteur);
 
         webView = (WebView) findViewById(R.id.wvTextToken);
-        FormaterManager formaterManager=new FormaterManager(getApplicationContext());
-        webView.loadDataWithBaseURL("file:///android_asset/Fonts/",formaterManager.formatWithPref(recoText), "text/html","utf-8",null);
+        FormaterManager formaterManager = new FormaterManager(getApplicationContext());
+        webView.loadDataWithBaseURL(DATA_PATH, formaterManager.generateCSSfromPref(formaterManager.formatWithPref(recoText)), "text/html", "utf-8", null);
     }
 }

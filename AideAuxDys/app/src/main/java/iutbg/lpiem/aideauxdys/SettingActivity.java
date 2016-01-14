@@ -26,7 +26,6 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
     private ListView lstVwSetting;
     private ImageView imgTxtColor;
     private ImageView imgBackColor;
-    private SettingDAO settingDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +33,9 @@ public class SettingActivity extends AppCompatActivity implements ColorDialog.On
         setContentView(R.layout.activity_setting);
 
         // Initialisation
-        preferenceManager = new PreferenceManager(this);
+        preferenceManager =  new PreferenceManager(this);
         FontManager fontManager = new FontManager(this);
-        settingDAO = new SettingDAO(this);
+        SettingDAO settingDAO = new SettingDAO(this);
         lstVwSetting = (ListView) findViewById(R.id.setting_lstVw_pref);
         imgTxtColor = (ImageView) findViewById(R.id.setting_imgVw_txtColor);
         imgBackColor = (ImageView) findViewById(R.id.setting_imgVw_backColor);
