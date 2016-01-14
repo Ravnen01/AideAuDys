@@ -10,20 +10,13 @@
     tools:context="iutbg.lpiem.aideauxdys.MainActivity"
     android:background="#b3f0ff">
 
-    <ImageView
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/main_imgVw_setting"
-        android:layout_width="wrap_content"
-        android:src="@drawable/ic_action_setting"
-        android:layout_height="wrap_content" />
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/ivSplashScreen"
         android:src="@mipmap/ic_launcher_appareil_photo"
-        android:layout_below="@+id/main_imgVw_setting"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <ImageView
@@ -43,8 +36,7 @@
         android:id="@+id/ivGalerieImage"
         android:src="@drawable/icone_image"
         android:layout_below="@+id/ivSplashScreen"
-        android:layout_toLeftOf="@+id/main_imgVw_setting"
-        android:layout_toStartOf="@+id/main_imgVw_setting"
+        android:layout_alignParentRight="true"
         android:layout_marginRight="126dp"
         android:layout_marginEnd="126dp" />
 
