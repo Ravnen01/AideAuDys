@@ -54,7 +54,7 @@ public class TextTokenFragment extends Fragment implements Observeur{
         if(preferenceManager.getIsCutSyllabe()) {
             webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
         }else{
-            webView.loadDataWithBaseURL("file:///android_asset/Fonts/",formaterManager.formatWithPref(recoText), "text/html","utf-8",null);
+            webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.generateCSSfromPref(formaterManager.formatWithPref(recoText)), "text/html","utf-8",null);
         }
 
 
@@ -72,7 +72,7 @@ public class TextTokenFragment extends Fragment implements Observeur{
                     if(preferenceManager.getIsCutSyllabe()) {
                         webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithDecoupe(recoText), "text/html", "utf-8", null);
                     }else{
-                        webView.loadDataWithBaseURL("file:///android_asset/Fonts/",formaterManager.formatWithPref(recoText), "text/html","utf-8",null);
+                        webView.loadDataWithBaseURL("file:///android_asset/Fonts/",formaterManager.generateCSSfromPref(formaterManager.formatWithPref(recoText)), "text/html","utf-8",null);
                     }
                 } else {
                     btnEditer.setText(getString(R.string.textToken_Save));
@@ -90,6 +90,6 @@ public class TextTokenFragment extends Fragment implements Observeur{
     public void update() {
         webView = (WebView) view.findViewById(R.id.wvTextToken);
         FormaterManager formaterManager=new FormaterManager(view.getContext());
-        webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.formatWithPref(recoText), "text/html", "utf-8", null);
+        webView.loadDataWithBaseURL("file:///android_asset/Fonts/", formaterManager.generateCSSfromPref(formaterManager.formatWithPref(recoText)), "text/html", "utf-8", null);
     }
 }

@@ -1,6 +1,5 @@
 package iutbg.lpiem.aideauxdys;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -10,15 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.html.HtmlTags;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.html.simpleparser.StyleSheet;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -30,12 +24,8 @@ import java.io.StringReader;
 import java.util.List;
 
 import iutbg.lpiem.aideauxdys.Adapter.ChoixPrefAdapteur;
-
 import iutbg.lpiem.aideauxdys.DataBase.SettingDAO;
-
 import iutbg.lpiem.aideauxdys.Fragment.TextTokenFragment;
-
-import iutbg.lpiem.aideauxdys.Interface.Observeur;
 import iutbg.lpiem.aideauxdys.Manager.FormaterManager;
 import iutbg.lpiem.aideauxdys.Manager.PreferenceManager;
 import iutbg.lpiem.aideauxdys.Manager.TextReader;
@@ -156,7 +146,7 @@ public class TextTokenActivity extends AppCompatActivity{
             document.open();
             HTMLWorker htmlWorker = new HTMLWorker(document);
             htmlWorker.setStyleSheet(generateStyleSheet());
-            String str = "<html><body>"+formaterManager.formatWithPref(recoText)+"</body></html>";
+            String str = "<html><body>"+formaterManager.formatWithPref(fragment.getRecoText())+"</body></html>";
             htmlWorker.parse(new StringReader(str));
             document.close();
             file.close();
