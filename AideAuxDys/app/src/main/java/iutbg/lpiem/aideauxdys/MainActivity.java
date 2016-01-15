@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -113,6 +115,18 @@ public class MainActivity extends AppCompatActivity {
                 startCameraActivity();
             }
         });
+        final EditText etImport=(EditText)findViewById(R.id.etImport);
+        Button bImport=(Button)findViewById(R.id.bTextImport);
+        bImport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getApplicationContext(),TextTokenActivity.class);
+                Bundle b=new Bundle();
+                b.putString("recoString",etImport.getText().toString());
+                i.putExtras(b);
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -198,4 +212,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         layoutLoading.setVisibility(View.GONE);
     }
+
+
 }
