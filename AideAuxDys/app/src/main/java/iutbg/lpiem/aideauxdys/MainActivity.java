@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 b.putString("recoString",data);
                 intent.putExtras(b);
                 startActivity(intent);
+                
             }
         });
 
