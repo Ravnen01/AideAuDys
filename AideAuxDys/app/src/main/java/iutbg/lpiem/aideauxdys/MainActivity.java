@@ -1,5 +1,6 @@
 package iutbg.lpiem.aideauxdys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -15,14 +16,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,9 +43,14 @@ public class MainActivity extends AppCompatActivity {
     protected static final String PHOTO_TAKEN = "photo_taken";
     protected String path;
     protected boolean taken;
-    private static final int SELECT_PHOTO=12;
-    private static final int CAPTURE_PHOTO=11;
+    private static final int SELECT_PHOTO = 12;
+    private static final int CAPTURE_PHOTO = 11;
     private LinearLayout layoutLoading;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         layoutLoading = (LinearLayout) findViewById(R.id.main_layout_loading);
 
-        ImageView imgSetting = (ImageView)findViewById(R.id.ivOption);
+        ImageView imgSetting = (ImageView) findViewById(R.id.ivOption);
         imgSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageView imgImportImage=(ImageView)findViewById(R.id.ivGalerieImage);
+        ImageView imgImportImage = (ImageView) findViewById(R.id.ivGalerieImage);
         imgImportImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        String[] paths = new String[] { DATA_PATH, DATA_PATH + "tessdata/" };
+        String[] paths = new String[]{DATA_PATH, DATA_PATH + "tessdata/"};
 
         for (String path : paths) {
             File dir = new File(path);
@@ -108,26 +123,47 @@ public class MainActivity extends AppCompatActivity {
         }
         path = DATA_PATH + "/ocr.jpg";
 
-        ImageView ivPhoto=(ImageView)findViewById(R.id.ivPhoto);
+        ImageView ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
         ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startCameraActivity();
             }
         });
-        final EditText etImport=(EditText)findViewById(R.id.etImport);
-        Button bImport=(Button)findViewById(R.id.bTextImport);
-        bImport.setOnClickListener(new View.OnClickListener() {
+        Button bCharger = (Button) findViewById(R.id.bChargerText);
+        bCharger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(getApplicationContext(),TextTokenActivity.class);
+                String data="";
+
+                File text=new File(DATA_PATH+"AideAuxDys.txt");
+                if(text.exists()) {
+                    try {
+
+                        FileReader fileReader=new FileReader(text);
+                        BufferedReader bufferedReader=new BufferedReader(fileReader);
+                        String inter;
+                        while ((inter = bufferedReader.readLine()) != null) {
+                            data+=inter;
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Intent intent=new Intent(getApplicationContext(),TextTokenActivity.class);
                 Bundle b=new Bundle();
-                b.putString("recoString",etImport.getText().toString());
-                i.putExtras(b);
-                startActivity(i);
+                b.putString("recoString",data);
+                intent.putExtras(b);
+                startActivity(intent);
             }
         });
 
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     protected void startCameraActivity() {
@@ -142,11 +178,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "resultCode: " + resultCode);
-        switch(requestCode) {
+        switch (requestCode) {
             case SELECT_PHOTO:
-                if(resultCode==RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     final Uri imageUri = data.getData();
                     final InputStream imageStream;
                     FileOutputStream out = null;
@@ -155,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
 
-                        File file=new File(path);
+                        File file = new File(path);
                         out = new FileOutputStream(file);
                         selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
 
@@ -163,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                    }finally {
+                    } finally {
                         try {
                             if (out != null) {
                                 out.close();
@@ -173,8 +209,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                }else{
-                    Log.v(TAG,"User cancelled");
+                } else {
+                    Log.v(TAG, "User cancelled");
                 }
                 break;
             case CAPTURE_PHOTO:
@@ -202,8 +238,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    protected void starActivityResizePhoto(){
-        Intent intent=new Intent(this,CropActivity.class);
+    protected void starActivityResizePhoto() {
+        Intent intent = new Intent(this, CropActivity.class);
         startActivity(intent);
     }
 
@@ -211,6 +247,47 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         layoutLoading.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://iutbg.lpiem.aideauxdys/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://iutbg.lpiem.aideauxdys/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 
 

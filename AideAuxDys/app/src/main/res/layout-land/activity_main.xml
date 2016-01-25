@@ -44,5 +44,24 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/icone_engrenage" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Charger le dernier Texte"
+        android:id="@+id/bChargerText"
+        android:layout_marginTop="104dp"
+        android:layout_below="@+id/ivOption"
+        android:layout_toRightOf="@+id/ivOption"
+        android:layout_toEndOf="@+id/ivOption" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Importer un Texte"
+        android:id="@+id/bImport"
+        android:layout_alignTop="@+id/bChargerText"
+        android:layout_toLeftOf="@+id/ivOption"
+        android:layout_toStartOf="@+id/ivOption" />
+
 
 </RelativeLayout>

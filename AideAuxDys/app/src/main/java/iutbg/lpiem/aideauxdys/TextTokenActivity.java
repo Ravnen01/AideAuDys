@@ -1,5 +1,6 @@
 package iutbg.lpiem.aideauxdys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.FontFactory;
@@ -19,7 +21,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.util.List;
 
@@ -132,6 +137,7 @@ public class TextTokenActivity extends AppCompatActivity{
     protected void onDestroy() {
         super.onDestroy();
         textReader.destroy();
+
     }
 
     private void createPDF() {
@@ -198,4 +204,23 @@ public class TextTokenActivity extends AppCompatActivity{
         getFragmentManager().beginTransaction().replace(R.id.flMainActivity, fragment).commit();
 
     }
+
+    @Override
+    public void finish() {
+        File text=new File(DATA_PATH+"AideAuxDys.txt");
+        try {
+            text.createNewFile();
+            FileWriter fileWriter=new FileWriter(text,false);
+            recoText=fragment.getRecoText();
+            fileWriter.write(recoText);
+            fileWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        super.finish();
+    }
+
+
 }
